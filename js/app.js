@@ -1041,6 +1041,10 @@ const App = {
 
         // Close sidebar on mobile
         document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay')?.classList.remove('active');
+
+        // Scroll to top on page change (native app behavior)
+        document.querySelector('.main-content')?.scrollTo(0, 0);
 
         // Refresh page
         this.refreshPage(page);

@@ -1,16 +1,23 @@
 /* ==========================================
-   LifeOS Mobile Optimizations - V3 (EXTREME COMPATIBILITY)
+   LifeOS MOBILE — Native App Experience v4.0
+   Comprehensive mobile-first overrides
    ========================================== */
 
-/* 1. ROOT & GLOBAL RESET */
-:root {
-    --bottom-nav-height: 70px;
-    --mobile-padding: 15px;
-    --sidebar-width: 0px !important;
+/* ─── BASE MOBILE NAV (hidden on desktop) ─── */
+.mobile-nav {
+    display: none;
 }
 
+.sidebar-overlay {
+    display: none;
+}
+
+/* ─── MEDIA QUERY: max-width 991px ─── */
 @media (max-width: 991px) {
 
+    /* ═══════════════════════════════════
+   1. GLOBAL RESET
+   ═══════════════════════════════════ */
     html,
     body {
         width: 100% !important;
@@ -18,77 +25,74 @@
         margin: 0 !important;
         padding: 0 !important;
         overflow-x: hidden !important;
-        position: relative !important;
+        -webkit-overflow-scrolling: touch;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-text-size-adjust: 100%;
     }
 
-    /* 1. ANIMATION & TRANSITION REMOVAL (Clean & Fast) */
-    .stagger-1,
-    .stagger-2,
-    .stagger-3,
-    .stagger-4,
-    .stagger-5,
-    .stagger-6,
-    .stagger-7,
-    .stagger-8,
-    .stagger-9,
-    .stagger-10,
-    .stagger-11,
-    .stagger-12,
-    .stagger-13,
-    .fadeInScale,
-    .scanline,
-    .auth-card::before {
-        animation: none !important;
-        transition: none !important;
-        opacity: 1 !important;
-        transform: none !important;
+    /* Kill animations on mobile for instant UX */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001s !important;
+        transition-duration: 0.15s !important;
     }
 
-    /* 2. LAYOUT CORE */
+    /* Prevent iOS zoom on inputs */
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    /* ═══════════════════════════════════
+   2. OS STATUS BAR — HIDDEN ON MOBILE
+   ═══════════════════════════════════ */
+    .os-status-bar,
+    .os-status-restore-handle {
+        display: none !important;
+    }
+
+    /* ═══════════════════════════════════
+   3. LOADING SCREEN — MOBILE FIT
+   ═══════════════════════════════════ */
+    #loading-overlay {
+        padding: 20px !important;
+    }
+
+    #loading-overlay img {
+        height: 80px !important;
+    }
+
+    #loading-overlay span {
+        font-size: 36px !important;
+    }
+
+    /* ═══════════════════════════════════
+   4. APP LAYOUT
+   ═══════════════════════════════════ */
     #app {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
-        height: 100% !important;
+        height: 100vh !important;
         opacity: 1 !important;
         overflow: hidden !important;
     }
 
-    .main-content {
-        margin-left: 0 !important;
-        margin-top: 60px !important;
-        /* Managed by header height */
-        padding-bottom: var(--bottom-nav-height) !important;
-        width: 100% !important;
-        height: calc(100vh - 60px) !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        display: block !important;
-    }
-
-    .pages-container {
-        padding: 0 !important;
-        margin: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    .page {
-        padding: var(--mobile-padding) !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        overflow-y: visible !important;
-    }
-
-    /* 3. HEADER SIMPLIFICATION */
+    /* ═══════════════════════════════════
+   5. HEADER — Fixed Top Bar (like iOS/Android)
+   ═══════════════════════════════════ */
     .header {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
+        right: 0 !important;
         width: 100% !important;
-        height: 60px !important;
-        padding: 0 var(--mobile-padding) !important;
-        background: rgba(15, 16, 22, 0.95) !important;
+        height: 56px !important;
+        min-height: 56px !important;
+        padding: 0 12px !important;
+        background: var(--bg-secondary) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         z-index: 1500 !important;
@@ -96,139 +100,578 @@
         align-items: center !important;
         justify-content: space-between !important;
         border-bottom: 1px solid var(--border-color) !important;
+        box-sizing: border-box !important;
     }
 
+    /* Hide desktop header items */
     .header-left .header-clock,
     .header-left .header-divider,
     .header-right .search-bar,
     .header-right .header-profile-name,
-    .header-right .header-profile-title,
-    .header-left .logo {
+    .header-right .header-profile-title {
         display: none !important;
     }
 
     .header-left {
         display: flex !important;
         align-items: center !important;
-        gap: 10px !important;
+        gap: 12px !important;
     }
 
-    /* 4. SIDEBAR (MOBILE MENU) */
+    .header-left .page-title {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.02em !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 200px !important;
+    }
+
+    .header-right {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+
+    .header-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .header-profile {
+        padding: 4px !important;
+    }
+
+    .header-profile-chevron {
+        display: none !important;
+    }
+
+    /* Profile dropdown mobile */
+    .profile-dropdown {
+        right: 0 !important;
+        left: auto !important;
+        width: 220px !important;
+    }
+
+    /* Notification dropdown mobile */
+    .notification-dropdown {
+        right: -40px !important;
+        width: calc(100vw - 24px) !important;
+        max-width: 360px !important;
+    }
+
+    /* ═══════════════════════════════════
+   6. SIDEBAR — Off-canvas drawer
+   ═══════════════════════════════════ */
     .sidebar {
-        transform: translateX(-100%);
-        width: 280px !important;
-        height: 100% !important;
+        position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        z-index: 2500 !important;
-        transition: transform 0.4s ease !important;
-        position: fixed !important;
+        width: 280px !important;
+        height: 100vh !important;
+        transform: translateX(-100%) !important;
+        z-index: 3000 !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none !important;
     }
 
     .sidebar.open {
         transform: translateX(0) !important;
+        box-shadow: 8px 0 30px rgba(0, 0, 0, 0.5) !important;
     }
 
-    .sidebar-overlay.active {
-        display: block !important;
-        position: fixed !important;
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 2400 !important;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 2999;
     }
 
-    /* 5. DASHBOARD - TRULY VERTICAL */
+    .sidebar-overlay.active {
+        display: block !important;
+    }
+
+    /* ═══════════════════════════════════
+   7. MAIN CONTENT — Scrollable area
+   ═══════════════════════════════════ */
+    .main-content {
+        margin-left: 0 !important;
+        margin-top: 56px !important;
+        padding-bottom: 80px !important;
+        /* Space for bottom nav */
+        width: 100% !important;
+        height: calc(100vh - 56px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        display: block !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pages-container {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .page {
+        padding: 16px 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ═══════════════════════════════════
+   8. BOTTOM NAVIGATION — Native app tab bar
+   ═══════════════════════════════════ */
+    .mobile-nav {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 56px !important;
+        background: var(--bg-secondary) !important;
+        border-top: 1px solid var(--border-color) !important;
+        z-index: 2000 !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        padding: 0 !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+        box-sizing: content-box !important;
+    }
+
+    .mobile-nav-item {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--text-muted) !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        gap: 3px !important;
+        text-decoration: none !important;
+        height: 100% !important;
+        position: relative !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    .mobile-nav-item svg {
+        width: 20px !important;
+        height: 20px !important;
+        stroke-width: 1.8 !important;
+    }
+
+    .mobile-nav-item span {
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    .mobile-nav-item.active {
+        color: var(--accent-purple) !important;
+    }
+
+    .mobile-nav-item.active span {
+        font-weight: 700 !important;
+    }
+
+    /* ═══════════════════════════════════
+   9. DASHBOARD — Vertical card stack
+   ═══════════════════════════════════ */
+    #page-dashboard {
+        padding: 0 !important;
+    }
+
     .dashboard-main-grid {
         display: flex !important;
         flex-direction: column !important;
-        gap: 20px !important;
+        gap: 16px !important;
         width: 100% !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
     }
 
     .dashboard-panel {
         width: 100% !important;
         min-height: auto !important;
+        max-height: none !important;
         border-radius: 16px !important;
-        background: var(--bg-card) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
     }
 
-    .panel-header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-        height: 48px !important;
+    .dashboard-panel:hover {
+        transform: none !important;
+        /* No hover lift on mobile */
     }
 
-    .panel-header h3 {
-        font-size: 16px !important;
+    .panel-content {
+        max-height: none !important;
+        overflow: visible !important;
     }
 
+    /* Banner */
     .dashboard-banner-container {
         margin: 0 !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
     }
 
     .dashboard-banner {
         flex-direction: column !important;
         height: auto !important;
+        min-height: auto !important;
         padding: 0 !important;
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2) !important;
+        border-radius: 16px !important;
     }
 
     .dashboard-profile-info {
         width: 100% !important;
+        min-width: 0 !important;
         margin: 0 !important;
-        padding: 24px !important;
-        background: rgba(0, 0, 0, 0.2) !important;
+        padding: 20px 16px !important;
         border-radius: 0 !important;
     }
 
     .banner-welcome-text {
         width: 100% !important;
         flex-direction: column !important;
-        padding: 24px !important;
-        gap: 20px !important;
+        padding: 16px !important;
+        gap: 16px !important;
     }
 
+    #welcomeText {
+        font-size: 22px !important;
+    }
+
+    #welcomeSubtext {
+        font-size: 13px !important;
+    }
+
+    /* Stats Grid */
     .banner-stats-row,
     .banner-stats-grid-modern {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         width: 100% !important;
         min-width: 0 !important;
-        gap: 12px !important;
+        gap: 8px !important;
     }
 
+    .stat-card-modern,
     .banner-stat-item {
         min-width: 0 !important;
+        padding: 10px !important;
+        border-radius: 12px !important;
+    }
+
+    .stat-card-modern .stat-number {
+        font-size: 18px !important;
+    }
+
+    /* Quick Sites */
+    .quick-sites-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
         padding: 12px !important;
     }
 
-    .quick-sites-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 10px !important;
-        padding: 15px !important;
+    .quick-site-btn {
+        min-width: 0 !important;
     }
 
+    .quick-site-icon {
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    .quick-site-name {
+        font-size: 10px !important;
+    }
+
+    /* Quick Actions */
     .quick-actions-grid {
-        grid-template-columns: 1fr !important;
-        padding: 15px !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        padding: 12px !important;
     }
 
-    /* 6. MODALS - BOTTOM SHEET STYLE */
-    .modal-overlay {
-        align-items: flex-end !important;
+    .quick-action-btn {
+        padding: 10px !important;
+        font-size: 12px !important;
     }
 
-    .modal-content {
+    /* Panel Header */
+    .panel-header {
+        height: 44px !important;
+        padding: 0 12px !important;
+    }
+
+    .panel-header h3 {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+    }
+
+    /* ═══════════════════════════════════
+   10. TASKS / PLANNING
+   ═══════════════════════════════════ */
+    .planning-header,
+    .page-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .page-actions {
         width: 100% !important;
-        margin: 0 !important;
-        border-radius: 20px 20px 0 0 !important;
-        padding-bottom: env(safe-area-inset-bottom) !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
     }
 
-    /* 7. ALL GRIDS & LISTS */
+    .page-actions button,
+    .page-actions .btn {
+        flex: 1 !important;
+        min-width: 0 !important;
+        font-size: 13px !important;
+        padding: 10px 12px !important;
+        white-space: nowrap !important;
+    }
+
+    /* Kanban */
+    .kanban-board {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        min-height: auto !important;
+    }
+
+    .kanban-column {
+        width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+
+    /* Task list items */
+    .task-list-item {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 12px !important;
+    }
+
+    .task-list-item:hover {
+        transform: none !important;
+    }
+
+    .task-list-content {
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
+
+    .task-list-content div[style*="max-width: 400px"] {
+        max-width: 100% !important;
+    }
+
+    .task-list-actions {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+        gap: 4px !important;
+    }
+
+    .task-list-actions .btn-icon {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    /* Planning filters */
+    .planning-filters,
+    .filter-drop-inline {
+        width: 100% !important;
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px !important;
+        scrollbar-width: none !important;
+    }
+
+    .planning-filters::-webkit-scrollbar,
+    .filter-drop-inline::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* Calendar */
+    .calendar-day {
+        min-height: 60px !important;
+        padding: 4px !important;
+    }
+
+    .calendar-day-number {
+        font-size: 12px !important;
+    }
+
+    .calendar-tasks {
+        display: none !important;
+    }
+
+    .calendar-day.has-tasks::after {
+        content: '';
+        display: block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        margin: 2px auto 0;
+    }
+
+    .notes-layout {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 12px !important;
+    }
+
+    .notes-sidebar {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-height: 300px !important;
+        border-radius: 12px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .notes-content {
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 400px !important;
+    }
+
+    .note-editor-toolbar {
+        flex-wrap: wrap !important;
+        gap: 4px !important;
+        padding: 8px !important;
+    }
+
+    /* Tab bars & category chips — horizontal scroll */
+    .tab-bar,
+    .categories-bar,
+    .filter-chips {
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none !important;
+        gap: 6px !important;
+    }
+
+    .tab-bar::-webkit-scrollbar,
+    .categories-bar::-webkit-scrollbar,
+    .filter-chips::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* ═══════════════════════════════════
+   12. HABITS / CHAIN
+   ═══════════════════════════════════ */
+    .habit-dashboard-item {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        padding: 12px !important;
+    }
+
+    .dashboard-habit-mini-grid {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none !important;
+        gap: 4px !important;
+    }
+
+    .dashboard-habit-mini-grid::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .habit-day-box {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        font-size: 10px !important;
+        border-radius: 6px !important;
+    }
+
+    .habit-guide-modern {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+    }
+
+    /* ═══════════════════════════════════
+   13. WEEKLY PLANNER
+   ═══════════════════════════════════ */
+    #weeklyPlannerGrid {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .schedule-header-actions {
+        width: 100% !important;
+    }
+
+    /* ═══════════════════════════════════
+   14. PROFILE / SETTINGS
+   ═══════════════════════════════════ */
+    .settings-container {
+        flex-direction: column !important;
+    }
+
+    .settings-nav {
+        width: 100% !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 0 !important;
+        margin-bottom: 16px !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        gap: 0 !important;
+        scrollbar-width: none !important;
+    }
+
+    .settings-nav::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .settings-nav-item {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    }
+
+    .settings-content {
+        padding: 0 !important;
+    }
+
+    .profile-card-modern {
+        flex-direction: column !important;
+        height: auto !important;
+        padding: 16px !important;
+    }
+
+    /* ═══════════════════════════════════
+   15. ALL CONTENT GRIDS — Single column
+   ═══════════════════════════════════ */
     .books-grid,
     .shows-grid,
     .games-grid,
@@ -236,204 +679,230 @@
     .exams-grid,
     .sites-grid {
         grid-template-columns: 1fr !important;
-        gap: 15px !important;
+        gap: 12px !important;
     }
 
     .stats-row {
         grid-template-columns: 1fr !important;
-        gap: 12px !important;
-    }
-
-    /* 8. KANBAN & PLANNING */
-    .kanban-board {
-        flex-direction: column !important;
-        gap: 20px !important;
-    }
-
-    .kanban-column {
-        width: 100% !important;
-        min-height: auto !important;
-    }
-
-    .planning-header {
-        flex-direction: column !important;
-        gap: 15px !important;
-    }
-
-    /* 9. AUTH / LOGIN / LANDING - SIMPLIFIED */
-    .landing-wrapper {
-        flex-direction: column !important;
-        padding: 20px !important;
-        gap: 0 !important;
-        justify-content: center !important;
-        min-height: 100vh !important;
-        background: var(--bg-primary) !important;
-    }
-
-    .landing-info {
-        display: none !important;
-        /* Remove complex info on mobile as requested */
-    }
-
-    .os-clock-large {
-        font-size: 48px !important;
-        margin-bottom: 20px !important;
-    }
-
-    .landing-tagline {
-        font-size: 32px !important;
-        line-height: 1.2 !important;
-        margin-bottom: 15px !important;
-    }
-
-    .landing-description {
-        font-size: 14px !important;
-        line-height: 1.6 !important;
-        width: 100% !important;
-    }
-
-    .landing-stats-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        /* Stack stats vertically */
-        gap: 15px !important;
-        width: 100% !important;
-    }
-
-    .landing-stat-card {
-        padding: 15px !important;
-        flex-direction: row !important;
-        /* Row layout for stacked stats */
-        align-items: center !important;
-        gap: 15px !important;
-        text-align: left !important;
-    }
-
-    .stat-icon {
-        width: 40px !important;
-        height: 40px !important;
-        flex-shrink: 0 !important;
-    }
-
-    .stat-value {
-        font-size: 20px !important;
-        margin: 0 !important;
-    }
-
-    .stat-label {
-        font-size: 12px !important;
-        margin: 0 !important;
-    }
-
-    .auth-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 30px 20px !important;
-        border-radius: 20px !important;
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        box-shadow: none !important;
-        backdrop-filter: blur(10px) !important;
-    }
-
-    .auth-logo-container {
-        transform: none !important;
-        justify-content: center !important;
-        margin-bottom: 30px !important;
         gap: 10px !important;
     }
 
-    .auth-logo-premium {
-        height: 60px !important;
+    /* Card actions always visible on mobile (no hover) */
+    .card-actions {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* ═══════════════════════════════════
+   16. MODALS — Bottom sheet style
+   ═══════════════════════════════════ */
+    .modal-overlay,
+    .custom-confirm-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+    }
+
+    .modal-content,
+    .custom-confirm-modal {
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
+        border-radius: 20px 20px 0 0 !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        padding: 20px 16px !important;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .modal-header {
+        margin-bottom: 16px !important;
+    }
+
+    .modal-footer {
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding-top: 12px !important;
+    }
+
+    .modal-footer button,
+    .modal-footer .btn {
+        width: 100% !important;
+        padding: 14px !important;
+    }
+
+    /* Forms in modals */
+    .form-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .form-group {
+        width: 100% !important;
+    }
+
+    /* ═══════════════════════════════════
+   17. LOGIN / REGISTER — Clean mobile auth
+   ═══════════════════════════════════ */
+    #login-overlay {
+        padding: 0 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #login-overlay::after {
+        display: none !important;
+        /* Remove radial gradient overlay */
+    }
+
+    .scanline {
+        display: none !important;
+    }
+
+    .landing-wrapper {
+        flex-direction: column !important;
+        padding: 40px 20px !important;
+        gap: 0 !important;
+        min-height: 100vh !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: 100% !important;
+    }
+
+    /* Hide the info panel on mobile — keep it clean */
+    .landing-info {
+        display: none !important;
+    }
+
+    /* Auth Card */
+    .auth-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 32px 20px !important;
+        border-radius: 20px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .auth-card::before {
+        display: none !important;
+        /* Remove decorative pseudo elements */
+    }
+
+    .auth-logo-container {
+        justify-content: center !important;
+        margin-bottom: 28px !important;
+        transform: none !important;
+        gap: 8px !important;
+    }
+
+    .auth-logo-premium {
+        height: 64px !important;
+        margin: 0 !important;
+        margin-right: 0 !important;
+        transform: none !important;
     }
 
     .logo-text-modern {
         font-size: 28px !important;
+        transform: none !important;
     }
 
     .auth-title {
-        font-size: 24px !important;
-        margin-bottom: 8px !important;
+        font-size: 22px !important;
         text-align: center !important;
+        margin-bottom: 6px !important;
     }
 
     .auth-subtitle {
-        font-size: 13px !important;
-        margin-bottom: 30px !important;
+        font-size: 14px !important;
         text-align: center !important;
+        margin-bottom: 28px !important;
     }
 
-    /* 10. UTILITY */
-    .form-row {
-        flex-direction: column !important;
-    }
-
-    input,
-    select,
-    textarea,
-    button {
+    .auth-form .form-input {
+        height: 50px !important;
         font-size: 16px !important;
-        /* Prevent iOS zoom */
+        border-radius: 14px !important;
+        padding: 0 16px !important;
     }
 
-    /* BOTTOM NAV - SLEEKER & SMALLER */
-    :root {
-        --bottom-nav-height: 60px;
-        /* Reduced from 70px */
+    .auth-btn {
+        height: 50px !important;
+        font-size: 15px !important;
+        border-radius: 14px !important;
+        margin-top: 8px !important;
     }
 
-    .mobile-nav {
-        display: flex !important;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: var(--bottom-nav-height) !important;
-        background: rgba(10, 10, 15, 0.95) !important;
-        border-top: 1px solid var(--border-color);
-        z-index: 2000;
-        padding-bottom: env(safe-area-inset-bottom) !important;
+    .auth-switch {
+        text-align: center !important;
+        margin-top: 20px !important;
+        font-size: 14px !important;
     }
 
-    .mobile-nav-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-        font-size: 10px;
-        gap: 2px !important;
-        text-decoration: none !important;
+    .auth-error {
+        border-radius: 12px !important;
+        padding: 12px !important;
+        font-size: 13px !important;
     }
 
-    .mobile-nav-item svg {
-        width: 18px !important;
-        /* Reduced from 22px */
-        height: 18px !important;
-        stroke-width: 2.2px !important;
-        /* Thicker stroke for small icons */
+    /* Inline style overrides for elements with fixed widths in JS */
+    .form-group-checkbox {
+        margin-bottom: 20px !important;
     }
 
-    .mobile-nav-item span {
-        font-size: 9px !important;
-        font-weight: 500 !important;
-        opacity: 0.8;
+    /* ═══════════════════════════════════
+   18. POMODORO
+   ═══════════════════════════════════ */
+    .timer-display {
+        font-size: 64px !important;
     }
 
-    .mobile-nav-item.active {
-        color: var(--accent-purple);
+    .timer-controls {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
     }
 
-    .mobile-nav-item.active span {
-        font-weight: 700 !important;
-        opacity: 1;
+    /* ═══════════════════════════════════
+   19. SCROLLBAR — Hidden on mobile
+   ═══════════════════════════════════ */
+    .main-content::-webkit-scrollbar,
+    .pages-container::-webkit-scrollbar {
+        display: none !important;
     }
+
+    .main-content,
+    .pages-container {
+        scrollbar-width: none !important;
+    }
+
+    /* ═══════════════════════════════════
+   20. YOUTUBE PAGE
+   ═══════════════════════════════════ */
+    .yt-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ═══════════════════════════════════
+   21. HOVER EFFECTS — Disabled on mobile
+   ═══════════════════════════════════ */
+    .dashboard-panel:hover,
+    .kanban-column:hover,
+    .task-list-item:hover,
+    .landing-stat-card:hover,
+    .quick-site-btn:hover,
+    .quick-action-btn:hover {
+        transform: none !important;
+    }
+
 }
 
-/* Fixes for very narrow screens */
-@media (max-width: 350px) {
+/* END @media max-width: 991px */
+
+
+/* ═══════════════════════════════════
+   EXTRA NARROW SCREENS (< 380px)
+   ═══════════════════════════════════ */
+@media (max-width: 380px) {
 
     .banner-stats-row,
     .banner-stats-grid-modern {
@@ -441,6 +910,37 @@
     }
 
     .quick-sites-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mobile-nav-item span {
+        font-size: 9px !important;
+    }
+
+    .mobile-nav-item svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* ═══════════════════════════════════
+   PWA STANDALONE MODE
+   ═══════════════════════════════════ */
+@media all and (display-mode: standalone) {
+    .header {
+        padding-top: env(safe-area-inset-top, 0px) !important;
+        height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    }
+
+    .main-content {
+        margin-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    }
+
+    .mobile-nav {
+        height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
     }
 }
