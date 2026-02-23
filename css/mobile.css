@@ -432,9 +432,10 @@
 
     .quick-site-btn {
         min-width: 0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 12px !important;
-        padding: 8px 4px !important;
+        border: none !important;
+        /* User request: remove borders */
+        background: transparent !important;
+        padding: 4px !important;
     }
 
     .quick-site-icon {
@@ -766,19 +767,61 @@
         overflow-y: auto !important;
     }
 
-    .notes-list {
-        max-height: 200px !important;
-        overflow-y: auto !important;
+    .notes-toolbar div[style*="display: flex"][style*="flex-direction: column"] {
+        flex-direction: row !important;
+        gap: 8px !important;
     }
 
-    .note-item {
-        padding: 10px 12px !important;
+    .notes-toolbar div[style*="display: flex"]>div[style*="position: relative"] {
+        flex: 1 !important;
+    }
+
+    .notes-toolbar .form-input,
+    .notes-toolbar .form-select {
+        height: 40px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+    }
+
+    .notes-toolbar .form-select {
+        width: auto !important;
+        max-width: 130px !important;
+    }
+
+    .notes-list {
+        max-height: 250px !important;
+        overflow-y: auto !important;
+        padding: 4px !important;
     }
 
     .notes-content {
         width: 100% !important;
         min-width: 0 !important;
-        min-height: 350px !important;
+        min-height: 400px !important;
+        margin-top: 10px !important;
+    }
+
+    /* Better note list items on mobile */
+    .note-item {
+        padding: 15px !important;
+        margin-bottom: 8px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 12px !important;
+        border-bottom: none !important;
+    }
+
+    .note-item.active {
+        background: rgba(var(--accent-rgb), 0.1) !important;
+        border: 1px solid rgba(var(--accent-rgb), 0.2) !important;
+    }
+
+    .note-item-title {
+        font-size: 15px !important;
+    }
+
+    .notes-toolbar {
+        padding: 12px !important;
     }
 
     /* Note header actions — prevent cut-off */
@@ -853,34 +896,46 @@
     /* ───────────────────────────────────────────
    16. HABITS / CHAIN
    ─────────────────────────────────────────── */
+    /* Better visibility for Zinciri Kirma on mobile */
     .habit-dashboard-item {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 10px !important;
-        padding: 12px !important;
+        padding: 16px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .habit-details {
+        margin-bottom: 8px !important;
+    }
+
+    .habit-name {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+    }
+
+    .habit-stats {
+        font-size: 12px !important;
+        display: flex !important;
+        gap: 8px !important;
+        align-items: center !important;
     }
 
     .dashboard-habit-mini-grid {
-        width: 100% !important;
-        justify-content: flex-start !important;
-        margin-left: 0 !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none !important;
-        gap: 3px !important;
-    }
-
-    .dashboard-habit-mini-grid::-webkit-scrollbar {
-        display: none !important;
+        justify-content: space-between !important;
+        gap: 6px !important;
     }
 
     /* Show 7 day boxes max — hide the rest via JS override + CSS fallback */
     .habit-day-box {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        font-size: 10px !important;
-        border-radius: 8px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        font-size: 11px !important;
+        border-radius: 10px !important;
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     /* Upcoming events — max 2 visible, compact */
@@ -1342,6 +1397,34 @@
 
     .module-toolbar .filter-search-input-modern {
         order: -1 !important;
+        flex-grow: 0 !important;
+    }
+
+    /* Category designs next to search bar */
+    .lesson-filters-wrapper {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 8px !important;
+        padding: 4px 0 !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none !important;
+    }
+
+    .lesson-filters-wrapper::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .filter-trigger-wrap {
+        flex-shrink: 0 !important;
+    }
+
+    .filter-trigger {
+        height: 38px !important;
+        padding: 0 12px !important;
+        border-radius: 10px !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
     }
 
     /* ───────────────────────────────────────────
