@@ -1,9 +1,9 @@
 /* ==========================================
-   LifeOS MOBILE — Native App Experience v4.0
-   Comprehensive mobile-first overrides
+   LifeOS MOBILE — Native App Experience v5.0
+   Complete mobile overrides — every page covered
    ========================================== */
 
-/* ─── BASE MOBILE NAV (hidden on desktop) ─── */
+/* ─── BASE (hidden on desktop) ─── */
 .mobile-nav {
     display: none;
 }
@@ -12,12 +12,14 @@
     display: none;
 }
 
-/* ─── MEDIA QUERY: max-width 991px ─── */
+/* ═══════════════════════════════════════════
+   MAIN MOBILE BREAKPOINT
+   ═══════════════════════════════════════════ */
 @media (max-width: 991px) {
 
-    /* ═══════════════════════════════════
-   1. GLOBAL RESET
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   1. GLOBAL RESET & PERFORMANCE
+   ─────────────────────────────────────────── */
     html,
     body {
         width: 100% !important;
@@ -30,12 +32,20 @@
         -webkit-text-size-adjust: 100%;
     }
 
-    /* Kill animations on mobile for instant UX */
+    /* Kill ALL animations — instant native feel */
     *,
     *::before,
     *::after {
         animation-duration: 0.001s !important;
+        animation-delay: 0s !important;
         transition-duration: 0.15s !important;
+    }
+
+    /* Stagger classes explicit kill */
+    [class*="stagger-"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     /* Prevent iOS zoom on inputs */
@@ -45,32 +55,38 @@
         font-size: 16px !important;
     }
 
-    /* ═══════════════════════════════════
-   2. OS STATUS BAR — HIDDEN ON MOBILE
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   2. OS STATUS BAR — HIDDEN
+   ─────────────────────────────────────────── */
     .os-status-bar,
     .os-status-restore-handle {
         display: none !important;
     }
 
-    /* ═══════════════════════════════════
-   3. LOADING SCREEN — MOBILE FIT
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   3. LOADING SCREEN
+   ─────────────────────────────────────────── */
     #loading-overlay {
         padding: 20px !important;
     }
 
+    #loading-overlay div {
+        transform: none !important;
+    }
+
     #loading-overlay img {
-        height: 80px !important;
+        height: 70px !important;
+        margin-right: -8px !important;
+        transform: none !important;
     }
 
     #loading-overlay span {
-        font-size: 36px !important;
+        font-size: 32px !important;
     }
 
-    /* ═══════════════════════════════════
-   4. APP LAYOUT
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   4. APP SHELL
+   ─────────────────────────────────────────── */
     #app {
         display: flex !important;
         flex-direction: column !important;
@@ -80,9 +96,9 @@
         overflow: hidden !important;
     }
 
-    /* ═══════════════════════════════════
-   5. HEADER — Fixed Top Bar (like iOS/Android)
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   5. HEADER — Fixed top bar
+   ─────────────────────────────────────────── */
     .header {
         position: fixed !important;
         top: 0 !important;
@@ -103,12 +119,14 @@
         box-sizing: border-box !important;
     }
 
-    /* Hide desktop header items */
+    /* Hide desktop-only header items */
     .header-left .header-clock,
     .header-left .header-divider,
+    .header-left .logo,
     .header-right .search-bar,
     .header-right .header-profile-name,
-    .header-right .header-profile-title {
+    .header-right .header-profile-title,
+    .header-profile-chevron {
         display: none !important;
     }
 
@@ -116,22 +134,23 @@
         display: flex !important;
         align-items: center !important;
         gap: 12px !important;
+        min-width: 0 !important;
     }
 
     .header-left .page-title {
         font-size: 17px !important;
         font-weight: 700 !important;
-        letter-spacing: -0.02em !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        max-width: 200px !important;
+        max-width: 180px !important;
     }
 
     .header-right {
         display: flex !important;
         align-items: center !important;
-        gap: 6px !important;
+        gap: 4px !important;
+        flex-shrink: 0 !important;
     }
 
     .header-btn {
@@ -142,33 +161,53 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        border-radius: 10px !important;
     }
 
     .header-profile {
         padding: 4px !important;
     }
 
-    .header-profile-chevron {
-        display: none !important;
+    /* ───────────────────────────────────────────
+   6. NOTIFICATIONS — Full width dropdown
+   ─────────────────────────────────────────── */
+    .notification-dropdown {
+        position: fixed !important;
+        top: 56px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 0 16px 16px !important;
+        max-height: 70vh !important;
+        z-index: 10020 !important;
     }
 
-    /* Profile dropdown mobile */
+    .notification-dropdown.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    .dropdown-content {
+        max-height: 50vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Profile dropdown */
     .profile-dropdown {
-        right: 0 !important;
+        position: fixed !important;
+        top: 56px !important;
+        right: 8px !important;
         left: auto !important;
         width: 220px !important;
+        border-radius: 0 0 16px 16px !important;
     }
 
-    /* Notification dropdown mobile */
-    .notification-dropdown {
-        right: -40px !important;
-        width: calc(100vw - 24px) !important;
-        max-width: 360px !important;
-    }
-
-    /* ═══════════════════════════════════
-   6. SIDEBAR — Off-canvas drawer
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   7. SIDEBAR — Off-canvas drawer
+   ─────────────────────────────────────────── */
     .sidebar {
         position: fixed !important;
         top: 0 !important;
@@ -202,14 +241,13 @@
         display: block !important;
     }
 
-    /* ═══════════════════════════════════
-   7. MAIN CONTENT — Scrollable area
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   8. MAIN CONTENT — Scrollable area
+   ─────────────────────────────────────────── */
     .main-content {
         margin-left: 0 !important;
         margin-top: 56px !important;
         padding-bottom: 80px !important;
-        /* Space for bottom nav */
         width: 100% !important;
         height: calc(100vh - 56px) !important;
         overflow-y: auto !important;
@@ -225,14 +263,14 @@
     }
 
     .page {
-        padding: 16px 12px !important;
+        padding: 12px !important;
         width: 100% !important;
         box-sizing: border-box !important;
     }
 
-    /* ═══════════════════════════════════
-   8. BOTTOM NAVIGATION — Native app tab bar
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   9. BOTTOM NAVIGATION — Tab bar
+   ─────────────────────────────────────────── */
     .mobile-nav {
         display: flex !important;
         position: fixed !important;
@@ -258,12 +296,9 @@
         align-items: center !important;
         justify-content: center !important;
         color: var(--text-muted) !important;
-        font-size: 10px !important;
-        font-weight: 500 !important;
         gap: 3px !important;
         text-decoration: none !important;
         height: 100% !important;
-        position: relative !important;
         -webkit-tap-highlight-color: transparent !important;
     }
 
@@ -276,7 +311,6 @@
     .mobile-nav-item span {
         font-size: 10px !important;
         font-weight: 500 !important;
-        letter-spacing: 0.01em !important;
     }
 
     .mobile-nav-item.active {
@@ -287,9 +321,9 @@
         font-weight: 700 !important;
     }
 
-    /* ═══════════════════════════════════
-   9. DASHBOARD — Vertical card stack
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   10. DASHBOARD
+   ─────────────────────────────────────────── */
     #page-dashboard {
         padding: 0 !important;
     }
@@ -297,7 +331,7 @@
     .dashboard-main-grid {
         display: flex !important;
         flex-direction: column !important;
-        gap: 16px !important;
+        gap: 14px !important;
         width: 100% !important;
         padding: 12px !important;
         box-sizing: border-box !important;
@@ -307,12 +341,11 @@
         width: 100% !important;
         min-height: auto !important;
         max-height: none !important;
-        border-radius: 16px !important;
+        border-radius: 14px !important;
     }
 
     .dashboard-panel:hover {
         transform: none !important;
-        /* No hover lift on mobile */
     }
 
     .panel-content {
@@ -320,10 +353,20 @@
         overflow: visible !important;
     }
 
+    .panel-header {
+        height: 44px !important;
+        padding: 0 12px !important;
+    }
+
+    .panel-header h3 {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+    }
+
     /* Banner */
     .dashboard-banner-container {
         margin: 0 !important;
-        border-radius: 16px !important;
+        border-radius: 14px !important;
         overflow: hidden !important;
     }
 
@@ -332,7 +375,7 @@
         height: auto !important;
         min-height: auto !important;
         padding: 0 !important;
-        border-radius: 16px !important;
+        border-radius: 14px !important;
     }
 
     .dashboard-profile-info {
@@ -347,18 +390,18 @@
         width: 100% !important;
         flex-direction: column !important;
         padding: 16px !important;
-        gap: 16px !important;
+        gap: 12px !important;
     }
 
     #welcomeText {
-        font-size: 22px !important;
+        font-size: 20px !important;
     }
 
     #welcomeSubtext {
         font-size: 13px !important;
     }
 
-    /* Stats Grid */
+    /* Stats */
     .banner-stats-row,
     .banner-stats-grid-modern {
         display: grid !important;
@@ -372,7 +415,7 @@
     .banner-stat-item {
         min-width: 0 !important;
         padding: 10px !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
     }
 
     .stat-card-modern .stat-number {
@@ -383,7 +426,7 @@
     .quick-sites-grid {
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
-        gap: 10px !important;
+        gap: 8px !important;
         padding: 12px !important;
     }
 
@@ -392,8 +435,8 @@
     }
 
     .quick-site-icon {
-        width: 44px !important;
-        height: 44px !important;
+        width: 40px !important;
+        height: 40px !important;
     }
 
     .quick-site-name {
@@ -412,25 +455,123 @@
         font-size: 12px !important;
     }
 
-    /* Panel Header */
-    .panel-header {
-        height: 44px !important;
-        padding: 0 12px !important;
+    /* ───────────────────────────────────────────
+   11. INLINE STYLE OVERRIDES (stats rows with inline grid)
+   ─────────────────────────────────────────── */
+    /* All pages (games, books, shows, sites, youtube, lessons, exams)
+   have stats-row with inline style: grid-template-columns: repeat(3, 1fr) */
+    .stats-row[style] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 16px !important;
     }
 
-    .panel-header h3 {
+    .stats-card-modern {
+        padding: 14px !important;
+    }
+
+    .stats-card-value {
+        font-size: 20px !important;
+    }
+
+    /* ───────────────────────────────────────────
+   12. GAMES PAGE — Cards fit screen
+   ─────────────────────────────────────────── */
+    #gamesGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .game-card-simple-v2 {
+        height: auto !important;
+        min-height: 100px !important;
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .game-card-simple-v2:hover {
+        transform: none !important;
+    }
+
+    .game-title-v2 {
         font-size: 14px !important;
-        font-weight: 700 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        line-height: 1.3 !important;
     }
 
-    /* ═══════════════════════════════════
-   10. TASKS / PLANNING
-   ═══════════════════════════════════ */
+    .store-badge-simple {
+        padding: 4px 8px !important;
+        font-size: 8px !important;
+    }
+
+    .genre-tag-v2 {
+        font-size: 9px !important;
+        padding: 3px 6px !important;
+    }
+
+    .status-label-v2 {
+        font-size: 11px !important;
+    }
+
+    .card-footer-simple {
+        margin-top: 8px !important;
+    }
+
+    /* ───────────────────────────────────────────
+   13. MODULE GRIDS — All content pages
+   ─────────────────────────────────────────── */
+    .module-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .module-card {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+
+    .module-card:hover {
+        transform: none !important;
+    }
+
+    .books-grid,
+    .shows-grid,
+    .games-grid,
+    .lessons-grid,
+    .exams-grid,
+    .sites-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Card actions always visible */
+    .card-actions,
+    .module-card-actions {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Empty state */
+    .empty-state-large {
+        padding: 40px 20px !important;
+    }
+
+    .empty-state-large .empty-icon svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    /* ───────────────────────────────────────────
+   14. TASKS / PLANNING
+   ─────────────────────────────────────────── */
     .planning-header,
     .page-header {
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 12px !important;
+        gap: 10px !important;
     }
 
     .page-actions {
@@ -444,8 +585,8 @@
     .page-actions .btn {
         flex: 1 !important;
         min-width: 0 !important;
-        font-size: 13px !important;
-        padding: 10px 12px !important;
+        font-size: 12px !important;
+        padding: 10px 8px !important;
         white-space: nowrap !important;
     }
 
@@ -453,7 +594,7 @@
     .kanban-board {
         display: flex !important;
         flex-direction: column !important;
-        gap: 16px !important;
+        gap: 14px !important;
         min-height: auto !important;
     }
 
@@ -464,11 +605,12 @@
         min-height: auto !important;
     }
 
-    /* Task list items */
+    /* Task items */
     .task-list-item {
         flex-wrap: wrap !important;
         gap: 8px !important;
         padding: 12px !important;
+        border-radius: 12px !important;
     }
 
     .task-list-item:hover {
@@ -480,7 +622,7 @@
         min-width: 0 !important;
     }
 
-    .task-list-content div[style*="max-width: 400px"] {
+    .task-list-content div[style*="max-width"] {
         max-width: 100% !important;
     }
 
@@ -496,14 +638,13 @@
         height: 32px !important;
     }
 
-    /* Planning filters */
+    /* Filters — horizontal scroll */
     .planning-filters,
     .filter-drop-inline {
         width: 100% !important;
         overflow-x: auto !important;
         flex-wrap: nowrap !important;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px !important;
         scrollbar-width: none !important;
     }
 
@@ -514,7 +655,7 @@
 
     /* Calendar */
     .calendar-day {
-        min-height: 60px !important;
+        min-height: 50px !important;
         padding: 4px !important;
     }
 
@@ -526,16 +667,9 @@
         display: none !important;
     }
 
-    .calendar-day.has-tasks::after {
-        content: '';
-        display: block;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: var(--accent-purple);
-        margin: 2px auto 0;
-    }
-
+    /* ───────────────────────────────────────────
+   15. NOTES PAGE
+   ─────────────────────────────────────────── */
     .notes-layout {
         flex-direction: column !important;
         height: auto !important;
@@ -545,15 +679,14 @@
     .notes-sidebar {
         width: 100% !important;
         min-width: 0 !important;
-        max-height: 300px !important;
+        max-height: 250px !important;
         border-radius: 12px !important;
-        margin-bottom: 0 !important;
     }
 
     .notes-content {
         width: 100% !important;
         min-width: 0 !important;
-        min-height: 400px !important;
+        min-height: 350px !important;
     }
 
     .note-editor-toolbar {
@@ -562,7 +695,7 @@
         padding: 8px !important;
     }
 
-    /* Tab bars & category chips — horizontal scroll */
+    /* Tab bars — horizontal scroll */
     .tab-bar,
     .categories-bar,
     .filter-chips {
@@ -570,7 +703,6 @@
         flex-wrap: nowrap !important;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none !important;
-        gap: 6px !important;
     }
 
     .tab-bar::-webkit-scrollbar,
@@ -579,13 +711,13 @@
         display: none !important;
     }
 
-    /* ═══════════════════════════════════
-   12. HABITS / CHAIN
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   16. HABITS / CHAIN
+   ─────────────────────────────────────────── */
     .habit-dashboard-item {
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 12px !important;
+        gap: 10px !important;
         padding: 12px !important;
     }
 
@@ -596,7 +728,7 @@
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none !important;
-        gap: 4px !important;
+        gap: 3px !important;
     }
 
     .dashboard-habit-mini-grid::-webkit-scrollbar {
@@ -604,21 +736,20 @@
     }
 
     .habit-day-box {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        font-size: 10px !important;
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        font-size: 9px !important;
         border-radius: 6px !important;
     }
 
     .habit-guide-modern {
         grid-template-columns: 1fr !important;
-        text-align: center !important;
     }
 
-    /* ═══════════════════════════════════
-   13. WEEKLY PLANNER
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   17. WEEKLY PLANNER
+   ─────────────────────────────────────────── */
     #weeklyPlannerGrid {
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
@@ -626,76 +757,154 @@
 
     .schedule-header-actions {
         width: 100% !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
     }
 
-    /* ═══════════════════════════════════
-   14. PROFILE / SETTINGS
-   ═══════════════════════════════════ */
-    .settings-container {
-        flex-direction: column !important;
+    /* ───────────────────────────────────────────
+   18. PROFILE / SETTINGS — Complete mobile redesign
+   ─────────────────────────────────────────── */
+    .settings-page-container {
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        min-height: auto !important;
+        margin: 0 !important;
     }
 
-    .settings-nav {
-        width: 100% !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        padding: 8px 0 !important;
+    .settings-body {
+        padding: 20px 12px !important;
+        overflow-y: visible !important;
+    }
+
+    .settings-main-header {
+        margin-bottom: 30px !important;
+        text-align: left !important;
+    }
+
+    .settings-main-header h1 {
+        font-size: 22px !important;
+    }
+
+    .settings-main-header p {
+        font-size: 14px !important;
+    }
+
+    .settings-section {
+        margin-bottom: 30px !important;
+    }
+
+    .section-divider {
         margin-bottom: 16px !important;
-        border-right: none !important;
-        border-bottom: 1px solid var(--border-color) !important;
-        gap: 0 !important;
-        scrollbar-width: none !important;
+        gap: 10px !important;
     }
 
-    .settings-nav::-webkit-scrollbar {
+    .divider-icon {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+    }
+
+    .divider-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .divider-text {
+        font-size: 16px !important;
+    }
+
+    /* Bento Grid — single column */
+    .settings-bento-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .bento-item {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+
+    .bento-item:hover {
+        transform: none !important;
+    }
+
+    .bento-item.medium-width,
+    .bento-item.full-width {
+        grid-column: auto !important;
+    }
+
+    .bento-header {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .bento-description {
+        font-size: 12px !important;
+    }
+
+    .bento-inner-content {
+        margin-bottom: 8px !important;
+    }
+
+    /* Settings close button */
+    .settings-close {
         display: none !important;
     }
 
-    .settings-nav-item {
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-        padding: 8px 16px !important;
-        font-size: 13px !important;
+    /* Color picker grid */
+    .color-grid-compact {
+        gap: 8px !important;
     }
 
-    .settings-content {
-        padding: 0 !important;
-    }
-
-    .profile-card-modern {
+    /* Action buttons */
+    .settings-final-actions {
         flex-direction: column !important;
-        height: auto !important;
-        padding: 16px !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+        padding-top: 20px !important;
     }
 
-    /* ═══════════════════════════════════
-   15. ALL CONTENT GRIDS — Single column
-   ═══════════════════════════════════ */
-    .books-grid,
-    .shows-grid,
-    .games-grid,
-    .lessons-grid,
-    .exams-grid,
-    .sites-grid {
+    .btn-xl {
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+        width: 100% !important;
+        border-radius: 12px !important;
+    }
+
+    /* Settings grid & items */
+    .settings-grid {
         grid-template-columns: 1fr !important;
         gap: 12px !important;
     }
 
-    .stats-row {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
+    .setting-item {
+        padding: 14px !important;
     }
 
-    /* Card actions always visible on mobile (no hover) */
-    .card-actions {
-        opacity: 1 !important;
-        visibility: visible !important;
+    .setting-item label {
+        font-size: 14px !important;
     }
 
-    /* ═══════════════════════════════════
-   16. MODALS — Bottom sheet style
-   ═══════════════════════════════════ */
+    /* Profile card */
+    .profile-card-modern {
+        flex-direction: column !important;
+        height: auto !important;
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+
+    .profile-card-modern img,
+    .profile-card-modern .avatar {
+        width: 64px !important;
+        height: 64px !important;
+    }
+
+    /* ───────────────────────────────────────────
+   19. MODALS — Bottom sheet
+   ─────────────────────────────────────────── */
     .modal-overlay,
     .custom-confirm-overlay {
         align-items: flex-end !important;
@@ -711,7 +920,7 @@
         max-height: 90vh !important;
         overflow-y: auto !important;
         padding: 20px 16px !important;
-        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
     }
 
     .modal-header {
@@ -721,7 +930,6 @@
     .modal-footer {
         flex-direction: column !important;
         gap: 8px !important;
-        padding-top: 12px !important;
     }
 
     .modal-footer button,
@@ -730,7 +938,6 @@
         padding: 14px !important;
     }
 
-    /* Forms in modals */
     .form-row {
         flex-direction: column !important;
         gap: 12px !important;
@@ -740,18 +947,18 @@
         width: 100% !important;
     }
 
-    /* ═══════════════════════════════════
-   17. LOGIN / REGISTER — Clean mobile auth
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   20. LOGIN / REGISTER — Direct, clean, no animation
+   ─────────────────────────────────────────── */
     #login-overlay {
         padding: 0 !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
+        background: var(--bg-primary) !important;
     }
 
     #login-overlay::after {
         display: none !important;
-        /* Remove radial gradient overlay */
     }
 
     .scanline {
@@ -760,100 +967,120 @@
 
     .landing-wrapper {
         flex-direction: column !important;
-        padding: 40px 20px !important;
+        padding: 24px 16px !important;
         gap: 0 !important;
         min-height: 100vh !important;
         justify-content: center !important;
         align-items: center !important;
         max-width: 100% !important;
+        width: 100% !important;
     }
 
-    /* Hide the info panel on mobile — keep it clean */
+    /* HIDE all landing info — go straight to login form */
     .landing-info {
         display: none !important;
     }
 
-    /* Auth Card */
+    /* Auth Card — clean mobile card */
     .auth-card {
         width: 100% !important;
         max-width: 100% !important;
-        padding: 32px 20px !important;
-        border-radius: 20px !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        padding: 28px 20px !important;
+        border-radius: 16px !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        backdrop-filter: blur(10px) !important;
     }
 
     .auth-card::before {
         display: none !important;
-        /* Remove decorative pseudo elements */
     }
 
+    /* Logo container — override all inline styles */
     .auth-logo-container {
         justify-content: center !important;
-        margin-bottom: 28px !important;
+        margin-bottom: 24px !important;
         transform: none !important;
-        gap: 8px !important;
+        gap: 6px !important;
+        display: flex !important;
+        align-items: center !important;
     }
 
-    .auth-logo-premium {
-        height: 64px !important;
+    .auth-logo-premium,
+    .auth-logo-container img {
+        height: 56px !important;
+        width: auto !important;
         margin: 0 !important;
         margin-right: 0 !important;
         transform: none !important;
+        display: block !important;
     }
 
-    .logo-text-modern {
-        font-size: 28px !important;
+    .auth-logo-container .logo-text-modern,
+    .auth-logo-container span[class*="logo-text"] {
+        font-size: 26px !important;
         transform: none !important;
     }
 
     .auth-title {
-        font-size: 22px !important;
+        font-size: 20px !important;
         text-align: center !important;
-        margin-bottom: 6px !important;
+        margin-bottom: 4px !important;
     }
 
     .auth-subtitle {
-        font-size: 14px !important;
+        font-size: 13px !important;
         text-align: center !important;
-        margin-bottom: 28px !important;
+        margin-bottom: 24px !important;
     }
 
-    .auth-form .form-input {
-        height: 50px !important;
+    .auth-form .form-group {
+        margin-bottom: 14px !important;
+    }
+
+    .auth-form .form-input,
+    .auth-form input[type="text"],
+    .auth-form input[type="password"] {
+        height: 48px !important;
         font-size: 16px !important;
-        border-radius: 14px !important;
+        border-radius: 12px !important;
         padding: 0 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
-    .auth-btn {
-        height: 50px !important;
+    .auth-btn,
+    .auth-form button[type="submit"] {
+        height: 48px !important;
         font-size: 15px !important;
-        border-radius: 14px !important;
-        margin-top: 8px !important;
+        border-radius: 12px !important;
+        margin-top: 4px !important;
+        width: 100% !important;
     }
 
     .auth-switch {
         text-align: center !important;
-        margin-top: 20px !important;
-        font-size: 14px !important;
-    }
-
-    .auth-error {
-        border-radius: 12px !important;
-        padding: 12px !important;
+        margin-top: 16px !important;
         font-size: 13px !important;
     }
 
-    /* Inline style overrides for elements with fixed widths in JS */
-    .form-group-checkbox {
-        margin-bottom: 20px !important;
+    .auth-error {
+        border-radius: 10px !important;
+        padding: 10px !important;
+        font-size: 13px !important;
+        margin-bottom: 12px !important;
     }
 
-    /* ═══════════════════════════════════
-   18. POMODORO
-   ═══════════════════════════════════ */
+    .form-group-checkbox {
+        margin-bottom: 16px !important;
+    }
+
+    /* ───────────────────────────────────────────
+   21. POMODORO
+   ─────────────────────────────────────────── */
     .timer-display {
-        font-size: 64px !important;
+        font-size: 56px !important;
     }
 
     .timer-controls {
@@ -862,36 +1089,89 @@
         gap: 8px !important;
     }
 
-    /* ═══════════════════════════════════
-   19. SCROLLBAR — Hidden on mobile
-   ═══════════════════════════════════ */
-    .main-content::-webkit-scrollbar,
-    .pages-container::-webkit-scrollbar {
-        display: none !important;
-    }
-
-    .main-content,
-    .pages-container {
-        scrollbar-width: none !important;
-    }
-
-    /* ═══════════════════════════════════
-   20. YOUTUBE PAGE
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   22. YOUTUBE
+   ─────────────────────────────────────────── */
     .yt-grid {
         grid-template-columns: 1fr !important;
     }
 
-    /* ═══════════════════════════════════
-   21. HOVER EFFECTS — Disabled on mobile
-   ═══════════════════════════════════ */
+    /* ───────────────────────────────────────────
+   23. SCROLLBAR — Hidden on mobile
+   ─────────────────────────────────────────── */
+    .main-content::-webkit-scrollbar,
+    .pages-container::-webkit-scrollbar,
+    .settings-body::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .main-content,
+    .pages-container,
+    .settings-body {
+        scrollbar-width: none !important;
+    }
+
+    /* ───────────────────────────────────────────
+   24. HOVER EFFECTS — All disabled
+   ─────────────────────────────────────────── */
     .dashboard-panel:hover,
     .kanban-column:hover,
     .task-list-item:hover,
     .landing-stat-card:hover,
     .quick-site-btn:hover,
-    .quick-action-btn:hover {
+    .quick-action-btn:hover,
+    .module-card:hover,
+    .game-card-simple-v2:hover,
+    .bento-item:hover {
         transform: none !important;
+    }
+
+    /* ───────────────────────────────────────────
+   25. MISC — Catch-all fixes
+   ─────────────────────────────────────────── */
+
+    /* All tables — horizontal scroll */
+    table {
+        display: block !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100% !important;
+    }
+
+    /* Wide elements contained */
+    pre,
+    code {
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        word-break: break-word !important;
+    }
+
+    /* Fix any absolute-positioned toolbar that overflows */
+    .toolbar,
+    .page-toolbar {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    /* Toast notifications — mobile position */
+    #toastContainer {
+        top: 64px !important;
+        right: 12px !important;
+        left: 12px !important;
+        width: auto !important;
+    }
+
+    #toastContainer .toast {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Notifications panel — full screen on mobile */
+    .notifications-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        right: 0 !important;
+        border-radius: 0 !important;
     }
 
 }
@@ -899,9 +1179,9 @@
 /* END @media max-width: 991px */
 
 
-/* ═══════════════════════════════════
+/* ═══════════════════════════════════════════
    EXTRA NARROW SCREENS (< 380px)
-   ═══════════════════════════════════ */
+   ═══════════════════════════════════════════ */
 @media (max-width: 380px) {
 
     .banner-stats-row,
@@ -917,6 +1197,10 @@
         grid-template-columns: 1fr !important;
     }
 
+    #gamesGrid {
+        grid-template-columns: 1fr !important;
+    }
+
     .mobile-nav-item span {
         font-size: 9px !important;
     }
@@ -925,11 +1209,16 @@
         width: 18px !important;
         height: 18px !important;
     }
+
+    .header-left .page-title {
+        max-width: 140px !important;
+        font-size: 15px !important;
+    }
 }
 
-/* ═══════════════════════════════════
+/* ═══════════════════════════════════════════
    PWA STANDALONE MODE
-   ═══════════════════════════════════ */
+   ═══════════════════════════════════════════ */
 @media all and (display-mode: standalone) {
     .header {
         padding-top: env(safe-area-inset-top, 0px) !important;

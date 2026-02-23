@@ -214,9 +214,10 @@ const App = {
         // Start Global Service
         this.startOSClock();
 
-        // OS Boot Sequence
+        // OS Boot Sequence — always skip on mobile for instant load
         const settings = Storage.load(Storage.KEYS.SETTINGS, {});
-        const skipAnimation = settings.layout?.disableEntryAnimations === true;
+        const isMobile = window.innerWidth <= 991;
+        const skipAnimation = isMobile || settings.layout?.disableEntryAnimations === true;
 
         if (skipAnimation) {
             this.renderOSLoginExperience();
@@ -398,10 +399,10 @@ const App = {
                     </div>
                 </div>
 
-                <div class="auth-card stagger-8">
-                    <div class="auth-logo-container" style="justify-content: flex-start; margin-bottom: 40px; transform: translateX(-15px);">
-                        <img src="assets/logo.png" alt="LifeOS Logo" class="auth-logo-premium" style="height: 140px; width: auto; margin: 0; display: block; transform: translateY(6px); margin-right: -12px;">
-                        <span class="logo-text-modern" style="font-size: 48px; line-height: 1; color: #fff; display: flex; align-items: center;">Life<span class="logo-accent">OS</span></span>
+                <div class="auth-card">
+                    <div class="auth-logo-container">
+                        <img src="assets/logo.png" alt="LifeOS Logo" class="auth-logo-premium">
+                        <span class="logo-text-modern">Life<span class="logo-accent">OS</span></span>
                     </div>
                     
                     <h2 class="auth-title">Oturum Açın</h2>
@@ -410,22 +411,22 @@ const App = {
                     <div id="authError" class="auth-error"></div>
 
                     <form id="loginForm" class="auth-form">
-                        <div class="form-group stagger-9">
+                        <div class="form-group">
                             <input type="text" id="username" class="form-input" placeholder="Kullanıcı Adı" required>
                         </div>
-                        <div class="form-group stagger-10">
+                        <div class="form-group">
                             <input type="password" id="password" class="form-input" placeholder="Şifre" required>
                         </div>
                         
-                        <div class="form-group-checkbox stagger-11" style="display: flex; align-items: center; margin-bottom: 25px;">
+                        <div class="form-group-checkbox" style="display: flex; align-items: center; margin-bottom: 20px;">
                             <input type="checkbox" id="rememberMe" style="width: auto; margin-right: 10px;">
                             <label for="rememberMe" style="color: var(--text-muted); font-size: 14px; cursor: pointer;">Oturumu açık tut</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary auth-btn stagger-12" id="loginBtn">ERİŞİM SAĞLA</button>
+                        <button type="submit" class="btn btn-primary auth-btn" id="loginBtn">GİRİŞ YAP</button>
                         
-                        <div class="auth-switch stagger-13">
-                            Henüz bir sistem kaydınız yok mu? <a onclick="App.renderRegisterUI('normal', true)">Yeni Hesap Oluştur</a>
+                        <div class="auth-switch">
+                            Henüz bir hesabınız yok mu? <a onclick="App.renderRegisterUI('normal', true)">Hesap Oluştur</a>
                         </div>
                     </form>
                 </div>
@@ -512,10 +513,10 @@ const App = {
                     </div>
                 </div>
 
-                <div class="auth-card stagger-8">
-                    <div class="auth-logo-container" style="justify-content: flex-start; margin-bottom: 40px; transform: translateX(-15px);">
-                        <img src="assets/logo.png" alt="LifeOS Logo" class="auth-logo-premium" style="height: 140px; width: auto; margin: 0; display: block; transform: translateY(6px); margin-right: -12px;">
-                        <span class="logo-text-modern" style="font-size: 48px; line-height: 1; color: #fff; display: flex; align-items: center;">Life<span class="logo-accent">OS</span></span>
+                <div class="auth-card">
+                    <div class="auth-logo-container">
+                        <img src="assets/logo.png" alt="LifeOS Logo" class="auth-logo-premium">
+                        <span class="logo-text-modern">Life<span class="logo-accent">OS</span></span>
                     </div>
 
                     <h2 class="auth-title">${isSetup ? 'Sistem Başlat' : 'Hesap Oluştur'}</h2>
@@ -524,21 +525,21 @@ const App = {
                     <div id="authError" class="auth-error"></div>
 
                     <form id="registerForm" class="auth-form">
-                        <div class="form-group stagger-9">
+                        <div class="form-group">
                             <input type="text" id="regUsername" class="form-input" placeholder="Kullanıcı Adı" required>
                         </div>
-                        <div class="form-group stagger-10">
+                        <div class="form-group">
                             <input type="password" id="regPassword" class="form-input" placeholder="Şifre" required>
                         </div>
-                        <div class="form-group stagger-11">
+                        <div class="form-group">
                             <input type="password" id="regPasswordConfirm" class="form-input" placeholder="Şifre Onay" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary auth-btn stagger-12" id="registerBtn">KURULUMU TAMAMLA</button>
+                        <button type="submit" class="btn btn-primary auth-btn" id="registerBtn">${isSetup ? 'KURULUMU TAMAMLA' : 'HESAP OLUŞTUR'}</button>
                         
                         ${!isSetup ? `
-                        <div class="auth-switch stagger-13">
-                            Zaten bir sistem kaydınız var mı? <a onclick="App.renderLoginUI(true)">Giriş Yap</a>
+                        <div class="auth-switch">
+                            Zaten bir hesabınız var mı? <a onclick="App.renderLoginUI(true)">Giriş Yap</a>
                         </div>
                         ` : ''}
                     </form>
@@ -869,13 +870,24 @@ const App = {
             }
         });
 
-        // Notifications button - FIXED: better event binding
+        // Notifications button - use dropdown on mobile, panel on desktop
         const notifBtn = document.getElementById('notificationBtn');
         if (notifBtn) {
             notifBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                Notifications.togglePanel();
+                const isMobile = window.innerWidth <= 991;
+                if (isMobile) {
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown) {
+                        dropdown.classList.toggle('active');
+                        if (dropdown.classList.contains('active')) {
+                            Notifications.renderDropdown();
+                        }
+                    }
+                } else {
+                    Notifications.togglePanel();
+                }
             });
         }
 
@@ -888,11 +900,13 @@ const App = {
             if (e.key === 'Escape') {
                 this.closeModal();
                 Notifications.closePanel();
+                document.getElementById('notificationDropdown')?.classList.remove('active');
             }
         });
 
-        // Sidebar close on outside click (mobile)
+        // Close dropdowns & sidebar on outside click
         document.addEventListener('click', (e) => {
+            // Sidebar close (mobile)
             const sidebar = document.getElementById('sidebar');
             const menuToggle = document.getElementById('menuToggle');
             const overlay = document.getElementById('sidebarOverlay');
@@ -900,6 +914,14 @@ const App = {
                 !sidebar.contains(e.target) && !menuToggle?.contains(e.target) && !overlay?.contains(e.target)) {
                 sidebar.classList.remove('open');
                 overlay?.classList.remove('active');
+            }
+
+            // Notification dropdown close on outside click
+            const notifDropdown = document.getElementById('notificationDropdown');
+            const notifBtnEl = document.getElementById('notificationBtn');
+            if (notifDropdown?.classList.contains('active') &&
+                !notifDropdown.contains(e.target) && !notifBtnEl?.contains(e.target)) {
+                notifDropdown.classList.remove('active');
             }
         });
 
