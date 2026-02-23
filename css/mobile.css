@@ -21,6 +21,29 @@
         position: relative !important;
     }
 
+    /* 1. ANIMATION & TRANSITION REMOVAL (Clean & Fast) */
+    .stagger-1,
+    .stagger-2,
+    .stagger-3,
+    .stagger-4,
+    .stagger-5,
+    .stagger-6,
+    .stagger-7,
+    .stagger-8,
+    .stagger-9,
+    .stagger-10,
+    .stagger-11,
+    .stagger-12,
+    .stagger-13,
+    .fadeInScale,
+    .scanline,
+    .auth-card::before {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
     /* 2. LAYOUT CORE */
     #app {
         display: flex !important;
@@ -128,6 +151,18 @@
         width: 100% !important;
         min-height: auto !important;
         border-radius: 16px !important;
+        background: var(--bg-card) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .panel-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        height: 48px !important;
+    }
+
+    .panel-header h3 {
+        font-size: 16px !important;
     }
 
     .dashboard-banner-container {
@@ -138,6 +173,7 @@
         flex-direction: column !important;
         height: auto !important;
         padding: 0 !important;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2) !important;
     }
 
     .dashboard-profile-info {
@@ -224,20 +260,19 @@
         gap: 15px !important;
     }
 
-    /* 9. AUTH / LOGIN / LANDING */
+    /* 9. AUTH / LOGIN / LANDING - SIMPLIFIED */
     .landing-wrapper {
         flex-direction: column !important;
-        padding: 40px 20px !important;
-        gap: 40px !important;
-        text-align: center !important;
+        padding: 20px !important;
+        gap: 0 !important;
+        justify-content: center !important;
         min-height: 100vh !important;
-        justify-content: flex-start !important;
+        background: var(--bg-primary) !important;
     }
 
     .landing-info {
-        flex: none !important;
-        width: 100% !important;
-        gap: 25px !important;
+        display: none !important;
+        /* Remove complex info on mobile as requested */
     }
 
     .os-clock-large {
@@ -293,17 +328,18 @@
     .auth-card {
         width: 100% !important;
         max-width: 100% !important;
-        padding: 25px !important;
-        border-radius: 24px !important;
-        background: rgba(15, 15, 20, 0.9) !important;
-        /* More opaque on mobile */
-        margin-bottom: 40px !important;
+        padding: 30px 20px !important;
+        border-radius: 20px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: none !important;
+        backdrop-filter: blur(10px) !important;
     }
 
     .auth-logo-container {
         transform: none !important;
         justify-content: center !important;
-        margin-bottom: 25px !important;
+        margin-bottom: 30px !important;
         gap: 10px !important;
     }
 
@@ -317,12 +353,15 @@
     }
 
     .auth-title {
-        font-size: 20px !important;
+        font-size: 24px !important;
+        margin-bottom: 8px !important;
+        text-align: center !important;
     }
 
     .auth-subtitle {
         font-size: 13px !important;
-        margin-bottom: 25px !important;
+        margin-bottom: 30px !important;
+        text-align: center !important;
     }
 
     /* 10. UTILITY */
@@ -338,18 +377,23 @@
         /* Prevent iOS zoom */
     }
 
-    /* BOTTOM NAV */
+    /* BOTTOM NAV - SLEEKER & SMALLER */
+    :root {
+        --bottom-nav-height: 60px;
+        /* Reduced from 70px */
+    }
+
     .mobile-nav {
         display: flex !important;
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: var(--bottom-nav-height);
-        background: rgba(10, 10, 15, 0.98);
+        height: var(--bottom-nav-height) !important;
+        background: rgba(10, 10, 15, 0.95) !important;
         border-top: 1px solid var(--border-color);
         z-index: 2000;
-        padding-bottom: env(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom) !important;
     }
 
     .mobile-nav-item {
@@ -360,12 +404,31 @@
         justify-content: center;
         color: var(--text-secondary);
         font-size: 10px;
-        gap: 4px;
+        gap: 2px !important;
         text-decoration: none !important;
+    }
+
+    .mobile-nav-item svg {
+        width: 18px !important;
+        /* Reduced from 22px */
+        height: 18px !important;
+        stroke-width: 2.2px !important;
+        /* Thicker stroke for small icons */
+    }
+
+    .mobile-nav-item span {
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        opacity: 0.8;
     }
 
     .mobile-nav-item.active {
         color: var(--accent-purple);
+    }
+
+    .mobile-nav-item.active span {
+        font-weight: 700 !important;
+        opacity: 1;
     }
 }
 
