@@ -432,6 +432,9 @@
 
     .quick-site-btn {
         min-width: 0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        padding: 8px 4px !important;
     }
 
     .quick-site-icon {
@@ -441,6 +444,11 @@
 
     .quick-site-name {
         font-size: 10px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+        display: block !important;
     }
 
     /* Quick Actions */
@@ -653,18 +661,92 @@
         display: none !important;
     }
 
-    /* Calendar */
+    /* Custom dropdowns — prevent overflow on small screens */
+    .custom-dropdown {
+        width: auto !important;
+        min-width: 120px !important;
+        max-width: 160px !important;
+    }
+
+    .custom-dropdown-trigger {
+        padding: 0 10px !important;
+        font-size: 12px !important;
+    }
+
+    .custom-dropdown-trigger span {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* All Tasks toolbar row — wrap and compact */
+    .all-tasks-toolbar,
+    div[style*="display: flex"][style*="justify-content: space-between"]>div[style*="gap: 15px"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    /* Task list items — better mobile layout */
+    .task-list-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .task-list-priority-svg {
+        align-self: flex-start !important;
+    }
+
+    .task-list-status {
+        align-self: flex-start !important;
+    }
+
+    .task-list-actions {
+        width: 100% !important;
+        justify-content: flex-end !important;
+    }
+
+    /* Calendar — square days, no content, dot indicator */
+    #monthlyCalendar {
+        grid-template-columns: repeat(7, 1fr) !important;
+    }
+
     .calendar-day {
-        min-height: 50px !important;
+        min-height: 0 !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
         padding: 4px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 10px !important;
     }
 
     .calendar-day-number {
-        font-size: 12px !important;
+        font-size: 13px !important;
+        margin-bottom: 0 !important;
+        align-self: center !important;
     }
 
     .calendar-tasks {
         display: none !important;
+    }
+
+    /* Dot indicator for days that have tasks */
+    .calendar-day.has-tasks::after {
+        content: '' !important;
+        display: block !important;
+        width: 5px !important;
+        height: 5px !important;
+        border-radius: 50% !important;
+        background: var(--accent-purple) !important;
+        margin-top: 2px !important;
+        box-shadow: 0 0 4px rgba(var(--accent-rgb), 0.5) !important;
+    }
+
+    .calendar-header {
+        font-size: 11px !important;
+        padding: 6px 0 !important;
     }
 
     /* ───────────────────────────────────────────
@@ -679,14 +761,71 @@
     .notes-sidebar {
         width: 100% !important;
         min-width: 0 !important;
-        max-height: 250px !important;
+        max-height: 300px !important;
         border-radius: 12px !important;
+        overflow-y: auto !important;
+    }
+
+    .notes-list {
+        max-height: 200px !important;
+        overflow-y: auto !important;
+    }
+
+    .note-item {
+        padding: 10px 12px !important;
     }
 
     .notes-content {
         width: 100% !important;
         min-width: 0 !important;
         min-height: 350px !important;
+    }
+
+    /* Note header actions — prevent cut-off */
+    .note-view-header {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .note-header-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .note-action-buttons {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    .note-btn-pill {
+        flex: 1 !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        padding: 8px 12px !important;
+    }
+
+    .note-btn-pill span {
+        display: inline !important;
+    }
+
+    .note-btn-group {
+        display: flex !important;
+        gap: 6px !important;
+    }
+
+    .note-btn-icon {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+    }
+
+    /* Color swatches compact */
+    .note-color-swatches-compact {
+        flex-wrap: wrap !important;
+        gap: 4px !important;
     }
 
     .note-editor-toolbar {
@@ -735,12 +874,33 @@
         display: none !important;
     }
 
+    /* Show 7 day boxes max — hide the rest via JS override + CSS fallback */
     .habit-day-box {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        font-size: 9px !important;
-        border-radius: 6px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        font-size: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Upcoming events — max 2 visible, compact */
+    .upcoming-item-box {
+        min-height: 50px !important;
+        padding: 10px 12px !important;
+    }
+
+    .upcoming-item-box .upcoming-title,
+    .upcoming-item-box span.upcoming-title {
+        font-size: 12px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 55% !important;
+        display: inline-block !important;
+    }
+
+    .upcoming-countdown-value {
+        font-size: 12px !important;
     }
 
     .habit-guide-modern {
@@ -771,11 +931,27 @@
         box-shadow: none !important;
         min-height: auto !important;
         margin: 0 !important;
+        padding-bottom: 80px !important;
+        /* Space for floating save above nav */
     }
 
     .settings-body {
         padding: 20px 12px !important;
+        padding-bottom: 100px !important;
+        /* Extra space for floating save */
         overflow-y: visible !important;
+    }
+
+    /* Settings floating save — position above bottom nav */
+    .settings-floating-save {
+        bottom: 72px !important;
+        /* 56px nav + 16px gap */
+        right: 16px !important;
+        left: 16px !important;
+        padding: 14px !important;
+        border-radius: 14px !important;
+        text-align: center !important;
+        justify-content: center !important;
     }
 
     .settings-main-header {
@@ -938,6 +1114,26 @@
         padding: 14px !important;
     }
 
+    /* Pomodoro settings modal footer (inline styled div) */
+    div[style*="modal-footer"],
+    form .modal-footer,
+    div[style*="justify-content: flex-end"][style*="margin-top: 24px"] {
+        flex-direction: column-reverse !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+
+    div[style*="justify-content: flex-end"][style*="margin-top: 24px"]>div {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    div[style*="justify-content: flex-end"][style*="margin-top: 24px"] button {
+        width: 100% !important;
+        min-height: 44px !important;
+    }
+
     .form-row {
         flex-direction: column !important;
         gap: 12px !important;
@@ -963,6 +1159,15 @@
 
     .scanline {
         display: none !important;
+    }
+
+    /* Clock — smaller on mobile */
+    .os-clock-large {
+        font-size: 48px !important;
+        letter-spacing: -2px !important;
+        margin-bottom: 10px !important;
+        padding: 0 !important;
+        text-shadow: none !important;
     }
 
     .landing-wrapper {
@@ -1094,6 +1299,49 @@
    ─────────────────────────────────────────── */
     .yt-grid {
         grid-template-columns: 1fr !important;
+    }
+
+    /* ───────────────────────────────────────────
+   22b. SEARCH BARS — Icon-only on mobile
+   ─────────────────────────────────────────── */
+    .filter-search-input-modern {
+        width: 38px !important;
+        min-width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+        color: transparent !important;
+        border-radius: 10px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 16px !important;
+    }
+
+    .filter-search-input-modern:focus {
+        width: 100% !important;
+        color: var(--text-primary) !important;
+        padding: 0 12px 0 36px !important;
+        background-position: 10px center !important;
+    }
+
+    .filter-search-input-modern::placeholder {
+        color: transparent !important;
+    }
+
+    .filter-search-input-modern:focus::placeholder {
+        color: var(--text-muted) !important;
+    }
+
+    /* Module toolbar search — flex to fit */
+    .module-toolbar {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .module-toolbar .filter-search-input-modern {
+        order: -1 !important;
     }
 
     /* ───────────────────────────────────────────

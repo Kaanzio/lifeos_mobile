@@ -75,9 +75,11 @@ const Dashboard = {
                 .sort((a, b) => HabitTracker.calculateStreak(b) - HabitTracker.calculateStreak(a))
                 .slice(0, 3);
 
-            // Image match: Show numbered boxes for last 14 days
+            // Show 7 days on mobile, 14 on desktop
+            const isMobile = window.innerWidth <= 991;
+            const daysToShow = isMobile ? 7 : 14;
             const last14Days = [];
-            for (let i = 13; i >= 0; i--) {
+            for (let i = daysToShow - 1; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
                 last14Days.push({
@@ -373,7 +375,7 @@ const Dashboard = {
                 const weightB = b.type === 'task' ? (priorityWeight[b.priority] || 0) : 4;
                 return weightB - weightA;
             })
-            .slice(0, 4); // Limit to max 4 items as per user request
+            .slice(0, window.innerWidth <= 991 ? 2 : 4); // 2 on mobile, 4 on desktop
 
         if (allUpcoming.length === 0) {
             container.innerHTML = '<p class="empty-state">Yaklaşan etkinlik yok</p>';

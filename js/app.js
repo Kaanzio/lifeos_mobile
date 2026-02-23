@@ -366,7 +366,7 @@ const App = {
 
         const content = `
                 <div class="landing-info">
-                    <div class="os-clock-large stagger-1" style="font-size: 64px; text-shadow: none; margin-bottom: 30px;">--:--:--</div>
+                    <div class="os-clock-large">--:--:--</div>
                     <div class="landing-tagline stagger-2">Sisteminize <span>Yeniden Hoş Geldiniz.</span></div>
                     <p class="landing-description stagger-3">Tüm öğrenme akışlarınız, görev yükünüz ve dijital kütüphaneniz güvenli LifeOS çekirdeği altında sizi bekliyor.</p>
                     
@@ -480,7 +480,7 @@ const App = {
 
         const content = `
                 <div class="landing-info">
-                    <div class="os-clock-large stagger-1" style="font-size: 64px; text-shadow: none; margin-bottom: 30px;">--:--:--</div>
+                    <div class="os-clock-large">--:--:--</div>
                     <div class="landing-tagline stagger-2">Hayatınızı <span>Optimize</span> Edin.</div>
                     <p class="landing-description stagger-3">Modern, hızlı ve güvenli kişisel asistanınızla tanışın. Tüm verileriniz AES-256 standartlarında tarayıcınızda, tamamen size özel olarak saklanır.</p>
                     
