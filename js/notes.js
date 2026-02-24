@@ -418,7 +418,14 @@ const Notes = {
         let textColor = selectedPreset ? (selectedPreset.text || 'var(--text-primary)') : this.getContrastText(editorBg);
         const editorBgStyle = editorBg === 'var(--bg-primary)' ? 'var(--bg-secondary)' : editorBg;
 
+        const isMobile = window.innerWidth <= 991;
+        const closeBtn = isMobile ? `
+            <button class="note-close-btn-mobile" onclick="Notes.currentNote = null; Notes.render();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> Notu Kapat
+            </button>` : '';
+
         return `
+            ${closeBtn}
             <div class="note-view-header">
                 <div class="note-header-main">
                     <div class="note-title-container">

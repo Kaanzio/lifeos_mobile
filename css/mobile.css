@@ -767,29 +767,40 @@
         overflow-y: auto !important;
     }
 
+    /* Notes toolbar — search and category side by side */
+    .notes-toolbar {
+        padding: 12px !important;
+    }
+
     .notes-toolbar div[style*="display: flex"][style*="flex-direction: column"] {
-        flex-direction: column !important;
-        gap: 10px !important;
+        flex-direction: row !important;
+        gap: 8px !important;
     }
 
     .notes-toolbar div[style*="display: flex"]>div[style*="position: relative"] {
-        width: 100% !important;
+        flex: 1 !important;
     }
 
-    .notes-toolbar .form-input,
-    .notes-toolbar .form-select {
-        height: 44px !important;
+    .notes-toolbar .form-input {
+        height: 40px !important;
         font-size: 14px !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         background: rgba(255, 255, 255, 0.03) !important;
-        width: 100% !important;
-        max-width: none !important;
+    }
+
+    .notes-toolbar .form-select {
+        height: 40px !important;
+        font-size: 13px !important;
+        border-radius: 10px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        min-width: 110px !important;
+        padding: 0 8px !important;
     }
 
     .notes-list {
-        max-height: 250px !important;
+        max-height: none !important;
         overflow-y: auto !important;
-        padding: 4px !important;
+        padding: 6px !important;
     }
 
     .notes-content {
@@ -799,26 +810,46 @@
         margin-top: 10px !important;
     }
 
-    /* Better note list items on mobile */
+    /* Note list items — card style on mobile */
     .note-item {
-        padding: 15px !important;
-        margin-bottom: 8px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 6px !important;
         background: rgba(255, 255, 255, 0.02) !important;
         border-radius: 12px !important;
         border-bottom: none !important;
+        border: 1px solid transparent !important;
     }
 
     .note-item.active {
-        background: rgba(var(--accent-rgb), 0.1) !important;
+        background: rgba(var(--accent-rgb), 0.08) !important;
         border: 1px solid rgba(var(--accent-rgb), 0.2) !important;
     }
 
     .note-item-title {
-        font-size: 15px !important;
+        font-size: 14px !important;
     }
 
-    .notes-toolbar {
-        padding: 12px !important;
+    /* Close button for opened note on mobile */
+    .note-close-btn-mobile {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .note-close-btn-mobile:active {
+        background: rgba(255, 255, 255, 0.06);
     }
 
     /* Note header actions — prevent cut-off */
@@ -891,44 +922,62 @@
     }
 
     /* ───────────────────────────────────────────
-   16. HABITS / CHAIN
+   16. HABITS / CHAIN — Redesigned for mobile
    ─────────────────────────────────────────── */
-    /* Better visibility for Zinciri Kirma on mobile */
     .habit-dashboard-item {
-        padding: 16px !important;
-        background: rgba(255, 255, 255, 0.02) !important;
-        border-radius: 16px !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 14px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 14px !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+
+    .habit-dashboard-item>.habit-icon-mini {
+        display: none !important;
     }
 
     .habit-details {
-        margin-bottom: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 0 !important;
+        width: 100% !important;
     }
 
     .habit-name {
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 700 !important;
     }
 
     .habit-stats {
-        font-size: 12px !important;
+        font-size: 11px !important;
         display: flex !important;
-        gap: 8px !important;
+        gap: 6px !important;
         align-items: center !important;
+    }
+
+    .stat-separator {
+        display: none !important;
+    }
+
+    .active-streak {
+        font-weight: 700 !important;
+        font-size: 12px !important;
     }
 
     .dashboard-habit-mini-grid {
         display: grid !important;
         grid-template-columns: repeat(7, 1fr) !important;
-        gap: 6px !important;
+        gap: 4px !important;
         width: 100% !important;
-        margin-top: 10px !important;
     }
 
-    /* Show 7 day boxes max — hide the rest via JS override + CSS fallback */
     .habit-day-box {
-        width: 100% !important;
-        height: 32px !important;
+        width: auto !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
         min-width: 0 !important;
         font-size: 11px !important;
         border-radius: 8px !important;
@@ -1198,7 +1247,7 @@
     }
 
     /* ───────────────────────────────────────────
-   20. LOGIN / REGISTER — Direct, clean, no animation
+   20. LOGIN / REGISTER — Direct auth-card, no animation
    ─────────────────────────────────────────── */
     #login-overlay {
         padding: 0 !important;
@@ -1215,13 +1264,9 @@
         display: none !important;
     }
 
-    /* Clock — smaller on mobile */
+    /* HIDE clock and landing info — show auth-card directly */
     .os-clock-large {
-        font-size: 48px !important;
-        letter-spacing: -2px !important;
-        margin-bottom: 10px !important;
-        padding: 0 !important;
-        text-shadow: none !important;
+        display: none !important;
     }
 
     .landing-wrapper {
@@ -1238,6 +1283,13 @@
     /* HIDE all landing info — go straight to login form */
     .landing-info {
         display: none !important;
+    }
+
+    /* Disable ALL stagger animations on mobile login */
+    .landing-wrapper [class*="stagger"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     /* Auth Card — clean mobile card */
@@ -1336,7 +1388,7 @@
     }
 
     /* ───────────────────────────────────────────
-   21. POMODORO
+   21. POMODORO — compact settings modal
    ─────────────────────────────────────────── */
     .timer-display {
         font-size: 56px !important;
@@ -1348,6 +1400,21 @@
         gap: 8px !important;
     }
 
+    /* Pomodoro settings form — compact layout */
+    #pomodoroSettingsForm .form-group {
+        margin-bottom: 10px !important;
+    }
+
+    #pomodoroSettingsForm .form-label {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+    }
+
+    #pomodoroSettingsForm .form-input {
+        height: 42px !important;
+        font-size: 15px !important;
+    }
+
     /* ───────────────────────────────────────────
    22. YOUTUBE
    ─────────────────────────────────────────── */
@@ -1356,114 +1423,67 @@
     }
 
     /* ───────────────────────────────────────────
-   22b. SEARCH BARS & CATEGORIES — Mobile Optimized
+   22b. SEARCH BARS — Icon-only on mobile
    ─────────────────────────────────────────── */
-    .lesson-filter-container-modern {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 12px !important;
-        padding: 10px 0 !important;
-    }
-
-    .lesson-filters-wrapper {
-        flex-direction: column !important;
-        gap: 12px !important;
-        width: 100% !important;
-    }
-
-    .filter-row-single {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
-    }
-
-    .filter-search-wrap {
-        width: 100% !important;
-    }
-
     .filter-search-input-modern {
-        width: 100% !important;
-        min-width: 100% !important;
-        height: 46px !important;
-        padding: 0 16px 0 42px !important;
-        color: var(--text-primary) !important;
-        border-radius: 12px !important;
-        background-color: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3C/svg%3E") !important;
+        width: 38px !important;
+        min-width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+        color: transparent !important;
+        border-radius: 10px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3C/svg%3E") !important;
         background-repeat: no-repeat !important;
-        background-position: 14px center !important;
-        background-size: 18px !important;
+        background-position: center !important;
+        background-size: 16px !important;
+    }
+
+    .filter-search-input-modern:focus {
+        width: 100% !important;
+        color: var(--text-primary) !important;
+        padding: 0 12px 0 36px !important;
+        background-position: 10px center !important;
     }
 
     .filter-search-input-modern::placeholder {
+        color: transparent !important;
+    }
+
+    .filter-search-input-modern:focus::placeholder {
         color: var(--text-muted) !important;
-        font-size: 14px !important;
     }
 
-    /* Filters (Categories) Scroller — Stacked below search */
-    .filter-trigger-wrap {
-        width: 100% !important;
-        position: static !important;
-        display: block !important;
-        margin-top: 4px !important;
-    }
-
-    .filter-trigger {
-        display: none !important;
-        /* Hide the dropdown button, show contents directly */
-    }
-
-    .filter-drop-inline {
-        position: static !important;
-        display: flex !important;
-        flex-direction: row !important;
+    /* Module toolbar search — only search bar visible */
+    .module-toolbar {
+        flex-wrap: wrap !important;
         gap: 8px !important;
-        overflow-x: auto !important;
-        padding: 4px 2px !important;
-        background: transparent !important;
-        border: none !important;
-        width: 100% !important;
-        box-shadow: none !important;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none !important;
-    }
-
-    .filter-drop-inline::-webkit-scrollbar {
-        display: none !important;
-    }
-
-    .filter-drop-inline .site-category-chip {
-        flex-shrink: 0 !important;
-        padding: 10px 16px !important;
-        font-size: 13px !important;
-        border-radius: 100px !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-
-    .filter-drop-inline .site-category-chip.active {
-        background: var(--accent-purple) !important;
-        border-color: var(--accent-purple) !important;
-        color: white !important;
     }
 
     .module-toolbar .filter-search-input-modern {
         order: -1 !important;
-        flex-grow: 1 !important;
+        flex-grow: 0 !important;
     }
 
+    /* HIDE category filters on mobile — only search bar visible */
+    .filter-trigger-wrap {
+        display: none !important;
+    }
+
+    .lesson-filters-wrapper {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        padding: 4px 0 !important;
+    }
+
+    /* Keep toolbar actions visible */
     .lesson-toolbar-actions {
-        flex-direction: row !important;
+        width: 100% !important;
+        display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        margin-top: 5px !important;
-        gap: 10px !important;
-    }
-
-    .toolbar-result-count {
-        font-size: 12px !important;
-        opacity: 0.7 !important;
     }
 
     /* ───────────────────────────────────────────

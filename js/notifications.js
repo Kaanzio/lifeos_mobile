@@ -160,10 +160,10 @@ const Notifications = {
         // Bind Actions
         document.getElementById('markAllReadBtn').onclick = () => this.markAllAsRead();
         document.getElementById('viewAllNotifications').onclick = () => {
-            // Open full notifications (if implemented) or just toggle panel
-            document.getElementById('notificationBtn').click(); // Close dropdown
-            // Here we could navigate to a dedicated notifications page if it existed
-            // For now, maybe just show a toast or nothing
+            this.notifications = [];
+            this.renderDropdown();
+            this.renderNotifications();
+            this.updateBadge();
         };
     },
 
