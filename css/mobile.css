@@ -20,9 +20,7 @@
    ═══════════════════════════════════════════ */
 @media (max-width: 991px) {
 
-    /* ───────────────────────────────────────────
-   1. GLOBAL RESET & PERFORMANCE
-   ─────────────────────────────────────────── */
+    /* 1. GLOBAL RESET & PERFORMANCE (Android-based normalization) */
     html,
     body {
         width: 100% !important;
@@ -30,9 +28,21 @@
         margin: 0 !important;
         padding: 0 !important;
         overflow-x: hidden !important;
-        -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling: auto;
+        /* Disable iOS elastic bounce to match Android feel */
         -webkit-tap-highlight-color: transparent;
         -webkit-text-size-adjust: 100%;
+        touch-action: manipulation;
+        user-select: none;
+        /* Prevent text selection across app to feel native */
+    }
+
+    /* Allow selection in inputs/selectable areas */
+    input,
+    textarea,
+    [contenteditable="true"],
+    .printable {
+        user-select: text !important;
     }
 
     /* Kill ALL animations — instant native feel */
@@ -42,20 +52,31 @@
         animation-duration: 0.001s !important;
         animation-delay: 0s !important;
         transition-duration: 0.15s !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Stagger classes explicit kill */
-    [class*="stagger-"] {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    /* Prevent iOS zoom on inputs */
+    /* iOS Normalization — Make it look like Android */
     input,
     select,
-    textarea {
-        font-size: 16px !important;
+    textarea,
+    button {
+        -webkit-appearance: none !important;
+        /* Kill iOS default styling */
+        appearance: none !important;
+        border-radius: 12px;
+        /* Re-apply consistent radius */
+        outline: none !important;
+    }
+
+    select {
+        background-color: transparent;
+    }
+
+    /* iOS Button shadow reset */
+    button {
+        background-image: none !important;
+        box-shadow: none;
     }
 
     /* ───────────────────────────────────────────
@@ -2341,15 +2362,11 @@
         width: 100% !important;
         flex-direction: row !important;
     }
-}
 
-/* ═══════════════════════════════════════════
-   PWA STANDALONE MODE
-   ═══════════════════════════════════════════ */
-@media all and (display-mode: standalone) {
     .header {
         padding-top: env(safe-area-inset-top, 0px) !important;
-        height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+        height: auto !important;
+        min-height: calc(56px + env(safe-area-inset-top, 0px)) !important;
     }
 
     .main-content {
@@ -2357,6 +2374,14 @@
     }
 
     .mobile-nav {
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
         height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
     }
+}
+
+/* ═══════════════════════════════════════════
+   PWA STANDALONE MODE
+   ═══════════════════════════════════════════ */
+@media all and (display-mode: standalone) {
+    /* Standalone specific optimizations if any, safe areas already handled above */
 }

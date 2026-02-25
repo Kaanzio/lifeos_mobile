@@ -51,7 +51,7 @@ const Schedule = {
      */
     remove(id) {
         const entry = this.schedule.find(s => s.id === id);
-        if (!event) return;
+        if (!entry) return;
 
         Notifications.confirm(
             'Dersi Sil',

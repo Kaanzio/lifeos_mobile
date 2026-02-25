@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LifeOS - Hayatını Yönet</title>
     <meta name="description" content="Hayatınızı akıllıca yönetin. Dersler, kitaplar, oyunlar ve daha fazlası.">
 
@@ -36,7 +37,9 @@
                 (error && error.stack ? error.stack : '') +
                 '</div>' +
                 '<button onclick="location.reload()" style="margin-top:20px;padding:10px 20px;background:white;color:black;border:none;border-radius:4px;cursor:pointer;font-weight:bold;">Sayfayı Yenile</button>';
-            document.body.appendChild(div);
+
+            const appendTo = document.body || document.documentElement;
+            if (appendTo) appendTo.appendChild(div);
             return false;
         };
     </script>
