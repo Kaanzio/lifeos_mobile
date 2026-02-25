@@ -21,7 +21,7 @@ const MobileFilterFab = {
             fab.id = 'mobileFilterFab';
             fab.className = 'mobile-filter-fab';
             fab.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>`;
-            fab.style.display = 'none'; // Hidden by default, shown on relevant pages
+            // Hidden by default via CSS; shown by adding .fab-visible class
             fab.addEventListener('click', () => this.toggle());
             document.body.appendChild(fab);
         }
@@ -58,9 +58,9 @@ const MobileFilterFab = {
         const filterablePages = ['lessons', 'exams', 'books', 'games', 'shows', 'sites', 'youtube'];
 
         if (filterablePages.includes(currentPage)) {
-            fab.style.display = 'flex';
+            fab.classList.add('fab-visible');
         } else {
-            fab.style.display = 'none';
+            fab.classList.remove('fab-visible');
             this.close();
         }
     },

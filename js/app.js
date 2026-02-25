@@ -714,32 +714,44 @@ const App = {
 
         this.loadTheme();
 
-        // Initialize all modules
-        Notifications.init();
-        Lessons.init();
-        Books.init();
-        Sites.init();
-        Games.init();
-        YouTube.init();
-        Planning.init();
-        Profile.init();
-        HabitTracker.init();
-        Exams.init();
-        Schedule.init();
-        Shows.init();
-        Pomodoro.init();
-        WeeklyPlanner.init();
-        Notes.init();
-        Dashboard.init();
+        // Initialize all modules (wrapped individually to prevent cascade failures)
+        const modules = [
+            ['Notifications', () => Notifications.init()],
+            ['Lessons', () => Lessons.init()],
+            ['Books', () => Books.init()],
+            ['Sites', () => Sites.init()],
+            ['Games', () => Games.init()],
+            ['YouTube', () => YouTube.init()],
+            ['Planning', () => Planning.init()],
+            ['Profile', () => Profile.init()],
+            ['HabitTracker', () => HabitTracker.init()],
+            ['Exams', () => Exams.init()],
+            ['Schedule', () => Schedule.init()],
+            ['Shows', () => Shows.init()],
+            ['Pomodoro', () => Pomodoro.init()],
+            ['WeeklyPlanner', () => WeeklyPlanner.init()],
+            ['Notes', () => Notes.init()],
+            ['Dashboard', () => Dashboard.init()],
+        ];
+
+        modules.forEach(([name, initFn]) => {
+            try { initFn(); } catch (e) { console.error(`[LifeOS] ${name}.init() failed:`, e); }
+        });
 
         // Optional Drive Sync
-        if (window.DriveSync) DriveSync.init();
+        try { if (window.DriveSync) DriveSync.init(); } catch (e) { console.error('[LifeOS] DriveSync.init() failed:', e); }
 
         this.bindEvents();
         this.updateUserInfo();
         this.showWelcomeNotification();
         this.updateWelcomeDate();
         this.startGlobalTimer();
+
+        // Initialize Mobile Filter FAB
+        if (typeof MobileFilterFab !== 'undefined') {
+            MobileFilterFab.init();
+            MobileFilterFab.updateVisibility();
+        }
 
         console.log('🎯 Life OS v2.5 başlatıldı!');
     },

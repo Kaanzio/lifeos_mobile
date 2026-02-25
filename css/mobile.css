@@ -1482,7 +1482,7 @@
 
     /* FAB button — bottom-right, above mobile nav */
     .mobile-filter-fab {
-        display: flex !important;
+        display: none !important;
         position: fixed !important;
         bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
         right: 16px !important;
@@ -1500,6 +1500,11 @@
         transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease !important;
         animation: fabBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
             fabPulse 2.5s ease-in-out 1s infinite !important;
+    }
+
+    /* Show FAB only when JS adds this class */
+    .mobile-filter-fab.fab-visible {
+        display: flex !important;
     }
 
     .mobile-filter-fab:active {
