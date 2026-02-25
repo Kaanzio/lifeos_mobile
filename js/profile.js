@@ -541,7 +541,10 @@ const Profile = {
         this.hasUnsavedChanges = true;
         this.applyAvatarStyle(true); // Preview only
         this.renderAvatarCreator(); // Re-render to update color buttons
-        if (picker && color !== 'transparent') picker.value = color;
+        if (color !== 'transparent') {
+            const picker = document.querySelector('input[type="color"]');
+            if (picker) picker.value = color;
+        }
     },
 
     renderAvatarCreator() {
