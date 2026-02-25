@@ -564,7 +564,7 @@ const Profile = {
 
         container.innerHTML = `
             <!-- Avatar Color Box -->
-            <div class="bento-item" style="padding: 16px 20px; height: 110px;">
+            <div class="bento-item" style="padding: 16px 20px; min-height: 110px; height: auto;">
                 <div class="bento-header" style="margin-bottom: 12px; display:flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> Avatar Rengi</div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="display: flex; gap: 6px;">
@@ -577,7 +577,7 @@ const Profile = {
                         `).join('')}
                     </div>
 
-                    <!-- Transparent Option (🚫) Moved Here -->
+                    <!-- Transparent Option (🚫) -->
                     <button class="avatar-color-btn ${color === 'transparent' ? 'active' : ''}"
                             style="width: 30px; height: 30px; border-radius: 6px; border: 2px solid ${color === 'transparent' ? 'white' : 'transparent'}; 
                             background: repeating-linear-gradient(45deg, #222, #222 5px, #333 5px, #333 10px); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px;" 
@@ -598,9 +598,9 @@ const Profile = {
             </div>
 
             <!-- Avatar Metni Box -->
-            <div class="bento-item" style="padding: 16px 20px; height: 110px;">
+            <div class="bento-item" style="padding: 16px 20px; min-height: 110px; height: auto;">
                 <div class="bento-header" style="margin-bottom: 12px; display:flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg> Avatar Metni</div>
-                <div style="background: var(--bg-tertiary); padding: 6px 12px; border-radius: 10px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; width: fit-content;">
+                <div style="background: var(--bg-tertiary); padding: 8px 12px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; width: fit-content;">
                     <input type="text" class="form-input" maxlength="2" placeholder="KN"
                         value="${logoText}"
                         oninput="Profile.setAvatarLogo(this.value)"
@@ -638,7 +638,7 @@ const Profile = {
                 <div class="bento-header" style="display:flex; align-items:center; gap:6px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg> Arkaplan Stilleri
                 </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 10px; align-items: center; width: 100%; min-height: 40px;">
                     ${bgColors.slice(0, 10).map(bg => `
                         <button class="profile-bg-color-btn ${this.stagingProfile.profileBgColor === bg.value ? 'active' : ''}" 
                                 style="width: 36px; height: 36px; border-radius: 10px; border: 2px solid ${this.stagingProfile.profileBgColor === bg.value ? 'white' : 'transparent'}; 
