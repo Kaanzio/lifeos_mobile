@@ -638,11 +638,11 @@ const Profile = {
                 <div class="bento-header" style="display:flex; align-items:center; gap:6px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg> Arkaplan Stilleri
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 10px; align-items: center; width: 100%; min-height: 40px;">
-                    ${bgColors.slice(0, 10).map(bg => `
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 10px; align-items: center; width: 100%; min-height: 44px; padding: 4px 0;">
+                    ${bgColors.map(bg => `
                         <button class="profile-bg-color-btn ${this.stagingProfile.profileBgColor === bg.value ? 'active' : ''}" 
-                                style="width: 36px; height: 36px; border-radius: 10px; border: 2px solid ${this.stagingProfile.profileBgColor === bg.value ? 'white' : 'transparent'}; 
-                                background: ${bg.value}; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15);" 
+                                style="width: 36px; height: 36px; border-radius: 10px; border: 2px solid ${this.stagingProfile.profileBgColor === bg.value ? 'white' : 'rgba(255,255,255,0.1)'} !important; 
+                                background: ${bg.value.includes('gradient') ? bg.value : bg.value} !important; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); box-sizing: border-box;" 
                                 onclick="Profile.setProfileBgColor('${bg.value}')" title="${bg.name}">
                         </button>
                     `).join('')}
@@ -1141,7 +1141,7 @@ const Profile = {
                 const g = parseInt(hex.slice(3, 5), 16);
                 const b = parseInt(hex.slice(5, 7), 16);
                 document.documentElement.style.setProperty('--accent-rgb', `${r}, ${g}, ${b}`);
-                document.documentElement.style.setProperty('--border-glow', `rgba(${r}, ${g}, ${b}, 0.4)`);
+                document.documentElement.style.setProperty('--border-glow', `rgba(${r}, ${g}, ${b}, 0.15)`);
             }
         }
     }

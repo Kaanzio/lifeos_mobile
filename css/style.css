@@ -60,11 +60,9 @@
     /* Borders & Shadows */
     --border-color: #2d2e3a;
     /* Subtle dark border */
-    --border-glow: rgba(var(--accent-rgb), 0.25);
-    /* Reduced opacity from 0.5 */
+    --border-glow: rgba(var(--accent-rgb), 0.1);
     --shadow-color: rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    /* Reduced spread and opacity */
+    --shadow-glow: 0 2px 8px rgba(0, 0, 0, 0.15);
     --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 
     /* Layout */
@@ -100,8 +98,9 @@
     --text-muted: #64748b;
 
     --border-color: #e2e8f0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 4px 12px rgba(var(--accent-rgb), 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --border-glow: rgba(var(--accent-rgb), 0.1);
     --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
 }
 
@@ -3468,7 +3467,7 @@ select.form-input:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: none;
 }
 
 .modal-header h3 {
@@ -7822,7 +7821,7 @@ select.form-input:active {
 }
 
 body {
-    background: #050510;
+    background: var(--bg-primary);
     /* Base background for the entire app */
 }
 
@@ -13768,19 +13767,20 @@ body {
     font-size: 13px;
     font-weight: 700;
     letter-spacing: -0.2px;
-}/ *   C a t e g o r y   S e l e c t o r s   D a r k   T h e m e   C o m p a t i b i l i t y   * / 
- s e l e c t   { 
-         b a c k g r o u n d - c o l o r :   v a r ( - - b g - t e r t i a r y ) ; 
-         c o l o r :   v a r ( - - t e x t - p r i m a r y ) ; 
-         b o r d e r :   1 p x   s o l i d   v a r ( - - b o r d e r - c o l o r ) ; 
-         b o r d e r - r a d i u s :   v a r ( - - b o r d e r - r a d i u s - x s ) ; 
-         p a d d i n g :   4 p x   8 p x ; 
-         o u t l i n e :   n o n e ; 
-         c u r s o r :   p o i n t e r ; 
- } 
- 
- s e l e c t   o p t i o n   { 
-         b a c k g r o u n d - c o l o r :   v a r ( - - b g - s e c o n d a r y ) ; 
-         c o l o r :   v a r ( - - t e x t - p r i m a r y ) ; 
- }  
- 
+}
+
+/* Category Selectors Dark Theme Compatibility */
+select {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-xs);
+    padding: 4px 8px;
+    outline: none;
+    cursor: pointer;
+}
+
+select option {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}

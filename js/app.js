@@ -772,7 +772,10 @@ const App = {
                 // Günü etkileyen modülleri yenile
                 this.updateWelcomeDate();
                 if (typeof Dashboard !== 'undefined') Dashboard.render();
-                if (typeof HabitTracker !== 'undefined') HabitTracker.render();
+                if (typeof HabitTracker !== 'undefined') {
+                    HabitTracker.render();
+                    if (HabitTracker.checkDailyReminders) HabitTracker.checkDailyReminders();
+                }
                 if (typeof Planning !== 'undefined') Planning.updateTodayTasks();
                 if (typeof Schedule !== 'undefined') Schedule.render();
                 if (typeof WeeklyPlanner !== 'undefined') WeeklyPlanner.render();

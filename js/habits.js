@@ -53,7 +53,9 @@ const HabitTracker = {
     checkDailyReminders() {
         // Son hatırlatma kontrolü (Günde 1 kez)
         const lastReminded = localStorage.getItem('lifeos_habit_reminder_date');
-        const today = App.getLocalDateString();
+        const today = (typeof App !== 'undefined' && App.getLocalDateString)
+            ? App.getLocalDateString()
+            : new Date().toISOString().split('T')[0];
 
         if (lastReminded === today) return;
 
