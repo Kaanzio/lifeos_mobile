@@ -1784,10 +1784,11 @@
         gap: 12px !important;
     }
 
-    /* Card grids — responsive columns */
+    /* Card grids — force single column on mobile */
     #gamesGrid,
-    #showsGrid {
-        grid-template-columns: repeat(2, 1fr) !important;
+    #showsGrid,
+    #booksGrid {
+        grid-template-columns: 1fr !important;
         gap: 12px !important;
     }
 

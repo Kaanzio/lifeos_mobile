@@ -7,6 +7,11 @@
 const MobileFilterFab = {
     isOpen: false,
 
+    // Escape string for safe use in HTML attributes (onclick handlers)
+    escapeAttr(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    },
+
     init() {
         if (window.innerWidth > 991) return;
 
@@ -223,9 +228,12 @@ const MobileFilterFab = {
     getBooksCategories() {
         if (!window.Books) return [];
         const cats = Books.categories || [];
-        return [{ id: 'all', label: 'Tümü' }, ...cats.map(c => ({ id: c.id, label: c.id }))]
-            .map(c => `<div class="site-category-chip ${Books.filterCategory === c.id ? 'active' : ''}" 
-                onclick="MobileFilterFab.onFilter('Books','setCategory','${c.id}')">${c.label}</div>`);
+        const items = [{ id: 'all', label: 'Tümü' }, ...cats.map(c => {
+            const name = (typeof c === 'string') ? c : (c.name || c.id || c);
+            return { id: name, label: name };
+        })];
+        return items.map(c => `<div class="site-category-chip ${Books.filterCategory === c.id ? 'active' : ''}" 
+                onclick="MobileFilterFab.onFilter('Books','setCategory','${this.escapeAttr(c.id)}')">${c.label}</div>`);
     },
 
     getBooksStatuses() {
@@ -237,21 +245,21 @@ const MobileFilterFab = {
             { id: 'completed', label: 'Okundu' }
         ];
         return items.map(s => `<div class="site-category-chip ${Books.filterStatus === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Books','setStatus','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Books','setStatus','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     },
 
     getGamesStores() {
         if (!window.Games) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Games.stores.map(s => ({ id: s.id, label: s.name }))];
         return items.map(s => `<div class="site-category-chip ${Games.filterStore === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Games','setStore','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Games','setStore','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     },
 
     getGamesGenres() {
         if (!window.Games) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Games.genres.map(g => ({ id: g.id, label: g.id }))];
         return items.map(g => `<div class="site-category-chip ${Games.filterGenre === g.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Games','setGenre','${g.id}')">${g.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Games','setGenre','${this.escapeAttr(g.id)}')">${g.label}</div>`);
     },
 
     getGamesStatuses() {
@@ -264,49 +272,49 @@ const MobileFilterFab = {
             { id: 'dropped', label: 'Bırakıldı' }
         ];
         return items.map(s => `<div class="site-category-chip ${Games.filterStatus === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Games','setStatus','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Games','setStatus','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     },
 
     getShowsTypes() {
         if (!window.Shows) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Shows.types.map(t => ({ id: t.id, label: t.name }))];
         return items.map(t => `<div class="site-category-chip ${Shows.filterType === t.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Shows','setCategory','${t.id}')">${t.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Shows','setCategory','${this.escapeAttr(t.id)}')">${t.label}</div>`);
     },
 
     getShowsStatuses() {
         if (!window.Shows) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Shows.statuses.map(s => ({ id: s.id, label: s.name }))];
         return items.map(s => `<div class="site-category-chip ${Shows.filterStatus === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Shows','setStatus','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Shows','setStatus','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     },
 
     getShowsGenres() {
         if (!window.Shows) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Shows.genres.map(g => ({ id: g.id, label: g.id }))];
         return items.map(g => `<div class="site-category-chip ${Shows.filterGenre === g.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Shows','setGenre','${g.id}')">${g.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Shows','setGenre','${this.escapeAttr(g.id)}')">${g.label}</div>`);
     },
 
     getShowsPlatforms() {
         if (!window.Shows) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...Shows.platforms.map(p => ({ id: p.id, label: p.name }))];
         return items.map(p => `<div class="site-category-chip ${Shows.filterPlatform === p.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Shows','setPlatform','${p.id}')">${p.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Shows','setPlatform','${this.escapeAttr(p.id)}')">${p.label}</div>`);
     },
 
     getSitesCategories() {
         if (!window.Sites) return [];
         const items = [{ id: 'all', label: 'Tümü' }, ...(Sites.categories || []).map(c => ({ id: c.name || c.id || c, label: c.name || c }))];
         return items.map(c => `<div class="site-category-chip ${Sites.filterCategory === c.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Sites','setCategory','${c.id}')">${c.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Sites','setCategory','${this.escapeAttr(c.id)}')">${c.label}</div>`);
     },
 
     getYouTubeCategories() {
         if (!window.YouTube) return [];
-        const items = [{ id: 'all', label: 'Tümü' }, ...(YouTube.categories || []).map(c => ({ id: c.name || c.id || c, label: c.name || c }))];
+        const items = [{ id: 'all', label: 'Tümü' }, ...(YouTube.categories || []).map(c => ({ id: c.id || c.name || c, label: c.id || c.name || c }))];
         return items.map(c => `<div class="site-category-chip ${YouTube.filterCategory === c.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('YouTube','setCategory','${c.id}')">${c.label}</div>`);
+            onclick="MobileFilterFab.onFilter('YouTube','setCategory','${this.escapeAttr(c.id)}')">${c.label}</div>`);
     },
 
     getLessonsSemesters() {
@@ -314,7 +322,7 @@ const MobileFilterFab = {
         const sems = Lessons.semesters || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...sems.map(s => ({ id: s.id || s, label: s.name || s }))];
         return items.map(s => `<div class="site-category-chip ${(Lessons.filterSemester || 'all') === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Lessons','setSemester','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Lessons','setSemester','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     },
 
     getLessonsGrades() {
@@ -322,7 +330,7 @@ const MobileFilterFab = {
         const grades = Lessons.grades || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...grades.map(g => ({ id: g.id || g, label: g.name || g }))];
         return items.map(g => `<div class="site-category-chip ${(Lessons.filterGrade || 'all') === g.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Lessons','setGrade','${g.id}')">${g.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Lessons','setGrade','${this.escapeAttr(g.id)}')">${g.label}</div>`);
     },
 
     getLessonsTypes() {
@@ -330,7 +338,7 @@ const MobileFilterFab = {
         const types = Lessons.types || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...types.map(t => ({ id: t.id || t, label: t.name || t }))];
         return items.map(t => `<div class="site-category-chip ${(Lessons.filterType || 'all') === t.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Lessons','setType','${t.id}')">${t.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Lessons','setType','${this.escapeAttr(t.id)}')">${t.label}</div>`);
     },
 
     getExamsCategories() {
@@ -338,7 +346,7 @@ const MobileFilterFab = {
         const cats = Exams.categories || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...cats.map(c => ({ id: c.id || c, label: c.id || c }))];
         return items.map(c => `<div class="site-category-chip ${(Exams.filterType || 'all') === c.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Exams','setCategory','${c.id}')">${c.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Exams','setCategory','${this.escapeAttr(c.id)}')">${c.label}</div>`);
     },
 
     getExamsGrades() {
@@ -346,7 +354,7 @@ const MobileFilterFab = {
         const grades = Lessons.grades || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...grades.map(g => ({ id: g.id || g, label: g.name || g }))];
         return items.map(g => `<div class="site-category-chip ${(Exams.filterGrade || 'all') === g.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Exams','setGrade','${g.id}')">${g.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Exams','setGrade','${this.escapeAttr(g.id)}')">${g.label}</div>`);
     },
 
     getExamsSemesters() {
@@ -354,7 +362,7 @@ const MobileFilterFab = {
         const sems = Lessons.semesters || [];
         const items = [{ id: 'all', label: 'Tümü' }, ...sems.map(s => ({ id: s.id || s, label: s.name || s }))];
         return items.map(s => `<div class="site-category-chip ${(Exams.filterSemester || 'all') === s.id ? 'active' : ''}" 
-            onclick="MobileFilterFab.onFilter('Exams','setSemester','${s.id}')">${s.label}</div>`);
+            onclick="MobileFilterFab.onFilter('Exams','setSemester','${this.escapeAttr(s.id)}')">${s.label}</div>`);
     }
 };
 

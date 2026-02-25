@@ -1166,14 +1166,15 @@ const App = {
         // Fallback if no user is logged in (shouldn't happen on dashboard)
         if (!currentUser && !Auth.userExists('admin')) return;
 
-        // Load specific profile data
+        // Load specific profile data (user-specific via Storage prefix)
         const profileData = Storage.load('lifeos_profile', null);
 
-        let displayName = (currentUser && currentUser.name) || (currentUser && currentUser.username) || 'Kullanıcı';
+        // Name priority: Profile name > Auth username > 'Kullanıcı'
+        let displayName = (currentUser && currentUser.username) || 'Kullanıcı';
         let headerTitle = 'LifeOS Üyesi';
         let bannerSubtitle = 'LifeOS Üyesi';
 
-        // Override with Profile Data if available
+        // Override with Profile Data if available (user-specific)
         if (profileData) {
             if (profileData.name && profileData.name.trim() !== '') displayName = profileData.name;
 
@@ -1243,11 +1244,11 @@ const App = {
         const nameEl = document.getElementById('dropdownUserName');
         const emailEl = document.getElementById('dropdownUserEmail'); // Actually 'Subtitle' now
 
-        // 1. Get Display Name (Name > Username)
-        const displayName = currentUser.name || currentUser.username;
+        // 1. Get Display Name (Profile Name > Username)
+        const profileData = Storage.load('lifeos_profile', {});
+        const displayName = (profileData.name && profileData.name.trim() !== '') ? profileData.name : currentUser.username;
 
         // 2. Get Subtitle (Title > Department > University > Username)
-        const profileData = Storage.load('lifeos_profile', {});
 
         let subtitle = '@' + currentUser.username;
 
