@@ -315,14 +315,28 @@ const Profile = {
     confirmClearData() {
         Notifications.confirm(
             'Tüm Verileri Sil',
-            'Tüm dersler, kitaplar ve görevler silinecek. Bu işlem geri alınamaz! Devam etmek istiyor musunuz?',
+            'Tüm dersler, kitaplar, sınavlar, oyunlar, dizi/film, youtube, siteler, notlar, takvim, alışkanlıklar ve görevler silinecek. Bu işlem geri alınamaz! Devam etmek istiyor musunuz?',
             async () => {
+                // 1. Clear all registered keys via Storage
                 await Storage.clearAll();
 
-                // Explicitly clear profile default override logic
+                // 2. Sweep ALL user-prefixed keys from localStorage (catches anything not in Storage.KEYS)
+                const prefix = Storage.userPrefix;
+                if (prefix) {
+                    const keysToRemove = [];
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith(prefix)) {
+                            keysToRemove.push(key);
+                        }
+                    }
+                    keysToRemove.forEach(key => localStorage.removeItem(key));
+                }
+
+                // 3. Also clear unprefixed legacy profile key
                 localStorage.removeItem('lifeos_profile');
 
-                // Reset user name in Auth system
+                // 4. Reset user name in Auth system
                 const user = Auth.getCurrentUser();
                 if (user) {
                     user.name = 'Kullanıcı';
