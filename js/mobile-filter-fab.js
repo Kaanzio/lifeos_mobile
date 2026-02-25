@@ -59,8 +59,16 @@ const MobileFilterFab = {
 
         if (filterablePages.includes(currentPage)) {
             fab.classList.add('fab-visible');
+
+            // Special color for YouTube
+            if (currentPage === 'youtube') {
+                fab.classList.add('youtube-mode');
+            } else {
+                fab.classList.remove('youtube-mode');
+            }
         } else {
             fab.classList.remove('fab-visible');
+            fab.classList.remove('youtube-mode');
             this.close();
         }
     },

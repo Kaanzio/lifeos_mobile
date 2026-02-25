@@ -858,7 +858,21 @@
     /* Note header actions — prevent cut-off */
     .note-view-header {
         flex-direction: column !important;
-        gap: 10px !important;
+        gap: 6px !important;
+        padding: 8px 12px !important;
+    }
+
+    .note-title-input {
+        font-size: 16px !important;
+    }
+
+    .note-editor-wrap {
+        padding: 10px !important;
+    }
+
+    .note-content-editor {
+        font-size: 15px !important;
+        padding-top: 10px !important;
     }
 
     .note-header-actions {
@@ -878,7 +892,8 @@
         flex: 1 !important;
         min-width: 0 !important;
         white-space: nowrap !important;
-        padding: 8px 12px !important;
+        padding: 6px 10px !important;
+        font-size: 12px !important;
     }
 
     .note-btn-pill span {
@@ -1493,7 +1508,7 @@
         background: var(--accent-purple, #7c3aed) !important;
         color: #fff !important;
         border: none !important;
-        box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 6px 24px rgba(124, 58, 237, 0.3) !important;
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer !important;
@@ -1505,6 +1520,12 @@
     /* Show FAB only when JS adds this class */
     .mobile-filter-fab.fab-visible {
         display: flex !important;
+    }
+
+    /* YouTube Mode */
+    .mobile-filter-fab.youtube-mode {
+        background: #ff0000 !important;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 6px 24px rgba(255, 0, 0, 0.3) !important;
     }
 
     .mobile-filter-fab:active {
@@ -1993,6 +2014,105 @@
     .header-left .page-title {
         max-width: 140px !important;
         font-size: 15px !important;
+    }
+
+    /* 23. MODALS & LESSON NOTES
+    ─────────────────────────────────────────── */
+    .modal {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        border: none !important;
+    }
+
+    .modal-header {
+        padding: 16px 20px !important;
+    }
+
+    .modal-body {
+        padding: 16px 20px !important;
+    }
+
+    .modal-footer {
+        padding: 12px 20px !important;
+    }
+
+    /* Lesson Notes Modal */
+    .notes-modal-premium {
+        padding: 0 !important;
+    }
+
+    .notes-workspace-header {
+        background: rgba(255, 255, 255, 0.03) !important;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+        border-radius: 12px !important;
+    }
+
+    .workspace-info {
+        gap: 12px !important;
+    }
+
+    .workspace-icon {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 10px !important;
+    }
+
+    .workspace-text h3 {
+        font-size: 16px !important;
+    }
+
+    .workspace-actions {
+        width: 100% !important;
+    }
+
+    .workspace-actions .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .note-file-card {
+        padding: 12px !important;
+        gap: 12px !important;
+        border-radius: 14px !important;
+    }
+
+    .note-file-card .file-icon-wrap {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 10px !important;
+        font-size: 18px !important;
+    }
+
+    .note-file-card .file-name {
+        font-size: 14px !important;
+    }
+
+    .note-file-card .file-meta {
+        font-size: 11px !important;
+    }
+
+    .file-btn {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    /* Pomodoro Settings Footer Fix */
+    #pomodoroSettingsForm .modal-footer {
+        margin-top: 15px !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        padding: 0 !important;
+    }
+
+    #pomodoroSettingsForm .modal-footer .btn {
+        flex: 1 !important;
+        min-width: 100px !important;
     }
 }
 
