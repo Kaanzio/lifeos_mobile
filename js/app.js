@@ -219,7 +219,14 @@ const App = {
         const isMobile = window.innerWidth <= 991;
         const skipAnimation = isMobile || settings.layout?.disableEntryAnimations === true;
 
-        if (skipAnimation) {
+        if (isMobile) {
+            // Mobile: Skip ALL login animations, show auth form directly
+            this.renderMobileDirectLogin();
+            const isBarHidden = localStorage.getItem('lifeos_statusbar_hidden') === 'true';
+            if (isBarHidden) {
+                document.getElementById('globalStatusBar')?.classList.add('hidden');
+            }
+        } else if (skipAnimation) {
             this.renderOSLoginExperience();
             const isBarHidden = localStorage.getItem('lifeos_statusbar_hidden') === 'true';
             if (isBarHidden) {
@@ -352,6 +359,33 @@ const App = {
 
         window.addEventListener('keydown', unlock);
         window.addEventListener('click', unlock);
+    },
+
+    /**
+     * Mobile: Show auth form directly without lock screen or animations
+     */
+    renderMobileDirectLogin() {
+        const overlay = document.getElementById('login-overlay');
+        overlay.style.display = 'flex';
+
+        const users = Auth.getUsers();
+        const isSetup = users.length === 0;
+
+        overlay.innerHTML = `
+            <div class="landing-wrapper" style="justify-content: center; align-items: center;">
+                <div id="authContainer" style="width: 100%; display: flex; align-items: stretch; justify-content: center;">
+                    <!-- Auth UI will be rendered here -->
+                </div>
+            </div>
+        `;
+
+        this.startOSClock();
+
+        if (isSetup) {
+            this.renderRegisterUI('setup', true);
+        } else {
+            this.renderLoginUI(true);
+        }
     },
 
     /**
@@ -1070,6 +1104,11 @@ const App = {
 
         // Refresh page
         this.refreshPage(page);
+
+        // Update mobile filter FAB visibility
+        if (typeof MobileFilterFab !== 'undefined') {
+            MobileFilterFab.updateVisibility();
+        }
     },
 
     refreshPage(page) {

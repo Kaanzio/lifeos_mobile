@@ -4,7 +4,10 @@
    ========================================== */
 
 /* ─── BASE (hidden on desktop) ─── */
-.mobile-nav {
+.mobile-nav,
+.mobile-filter-fab,
+.mobile-filter-backdrop,
+.mobile-filter-panel {
     display: none;
 }
 
@@ -1423,67 +1426,220 @@
     }
 
     /* ───────────────────────────────────────────
-   22b. SEARCH BARS — Icon-only on mobile
+   22b. TOOLBAR — Slim count + add button only
    ─────────────────────────────────────────── */
-    .filter-search-input-modern {
-        width: 38px !important;
-        min-width: 38px !important;
-        height: 38px !important;
-        padding: 0 !important;
-        color: transparent !important;
-        border-radius: 10px !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3C/svg%3E") !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-        background-size: 16px !important;
+
+    /* The main toolbar container: only count + add button */
+    .lesson-filter-container-modern {
+        height: auto !important;
+        min-height: 50px !important;
+        padding: 10px 14px !important;
+        border-radius: 14px !important;
+        margin-bottom: 16px !important;
+        gap: 0 !important;
+        overflow: visible !important;
     }
 
-    .filter-search-input-modern:focus {
+    /* HIDE the entire filters wrapper (search + category triggers) */
+    .lesson-filters-wrapper,
+    .filter-row-single {
+        display: none !important;
+    }
+
+    /* Toolbar actions: equalized spacing */
+    .lesson-toolbar-actions {
         width: 100% !important;
-        color: var(--text-primary) !important;
-        padding: 0 12px 0 36px !important;
-        background-position: 10px center !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
     }
 
-    .filter-search-input-modern::placeholder {
-        color: transparent !important;
+    .toolbar-result-count {
+        font-size: 13px !important;
+        font-weight: 700 !important;
     }
 
-    .filter-search-input-modern:focus::placeholder {
-        color: var(--text-muted) !important;
+    .lesson-toolbar-actions .btn {
+        height: 38px !important;
+        padding: 0 14px !important;
+        font-size: 13px !important;
+        border-radius: 10px !important;
     }
 
-    /* Module toolbar search — only search bar visible */
+    /* Module toolbar: same treatment */
     .module-toolbar {
         flex-wrap: wrap !important;
         gap: 8px !important;
     }
 
     .module-toolbar .filter-search-input-modern {
-        order: -1 !important;
-        flex-grow: 0 !important;
-    }
-
-    /* HIDE category filters on mobile — only search bar visible */
-    .filter-trigger-wrap {
         display: none !important;
     }
 
-    .lesson-filters-wrapper {
+    /* ───────────────────────────────────────────
+   22c. FLOATING SEARCH/FILTER FAB
+   ─────────────────────────────────────────── */
+
+    /* FAB button — bottom-left, above mobile nav */
+    .mobile-filter-fab {
         display: flex !important;
-        flex-wrap: nowrap !important;
-        gap: 8px !important;
-        padding: 4px 0 !important;
+        position: fixed !important;
+        bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+        left: 16px !important;
+        z-index: 999 !important;
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 16px !important;
+        background: var(--accent-purple, #7c3aed) !important;
+        color: #fff !important;
+        border: none !important;
+        box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
 
-    /* Keep toolbar actions visible */
-    .lesson-toolbar-actions {
-        width: 100% !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
+    .mobile-filter-fab:active {
+        transform: scale(0.92) !important;
+    }
+
+    .mobile-filter-fab svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    /* Backdrop when panel is open */
+    .mobile-filter-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+
+    .mobile-filter-backdrop.active {
+        display: block;
+    }
+
+    /* Slide-up panel */
+    .mobile-filter-panel {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
+        background: var(--bg-primary, #0a0a1a);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px 20px 0 0;
+        padding: 20px 16px;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        max-height: 75vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-filter-panel.active {
+        display: block;
+        transform: translateY(0);
+    }
+
+    /* Panel handle */
+    .mobile-filter-panel-handle {
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        margin: 0 auto 16px auto;
+    }
+
+    /* Panel title row */
+    .mobile-filter-panel-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .mobile-filter-panel-title h3 {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .mobile-filter-panel-close {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* Panel search input */
+    .mobile-filter-search {
+        width: 100%;
+        height: 46px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 0 14px 0 42px;
+        font-size: 15px;
+        color: var(--text-primary);
+        outline: none;
+        margin-bottom: 16px;
+        transition: all 0.2s;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: 12px center;
+    }
+
+    .mobile-filter-search:focus {
+        border-color: var(--accent-purple, #7c3aed);
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-filter-search::placeholder {
+        color: var(--text-muted);
+        opacity: 0.6;
+    }
+
+    /* Panel filter group */
+    .mobile-filter-group {
+        margin-bottom: 14px;
+    }
+
+    .mobile-filter-group-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        padding-left: 2px;
+    }
+
+    .mobile-filter-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .mobile-filter-chips .site-category-chip {
+        padding: 8px 14px !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
     }
 
     /* ───────────────────────────────────────────
@@ -1562,6 +1718,187 @@
         max-width: 100% !important;
         right: 0 !important;
         border-radius: 0 !important;
+    }
+
+    /* ───────────────────────────────────────────
+   26. GENERAL MOBILE POLISH
+   ─────────────────────────────────────────── */
+
+    /* Modal — full-width on mobile */
+    .modal-content {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        max-height: 90vh !important;
+        border-radius: 16px !important;
+        margin: auto !important;
+    }
+
+    .modal-body {
+        padding: 16px !important;
+    }
+
+    .modal-header {
+        padding: 14px 16px !important;
+    }
+
+    /* Info modal bento grid — single column */
+    .lesson-info-modal-modern div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Card grids — responsive columns */
+    #gamesGrid,
+    #showsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    /* Show cards — compact padding */
+    .show-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .show-card h4 {
+        font-size: 15px !important;
+        padding-right: 40px !important;
+    }
+
+    /* Game cards */
+    .game-card-simple-v2 {
+        padding: 14px !important;
+        border-radius: 14px !important;
+    }
+
+    .game-title-v2 {
+        font-size: 14px !important;
+    }
+
+    /* Book cards — compact */
+    .book-card {
+        padding: 16px !important;
+    }
+
+    /* Form rows — stack on mobile */
+    .form-row {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    /* Touch-friendly form inputs */
+    .form-input,
+    .form-select,
+    .form-textarea {
+        min-height: 44px !important;
+        font-size: 16px !important;
+        /* Prevents iOS zoom */
+    }
+
+    /* Modal footer — stack buttons */
+    .modal-footer-modern {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .modal-footer-modern .btn {
+        min-height: 44px !important;
+        font-size: 14px !important;
+    }
+
+    /* Empty states — smaller */
+    .empty-state-large {
+        padding: 32px 20px !important;
+    }
+
+    .empty-state-large svg {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .empty-state-large h3 {
+        font-size: 16px !important;
+    }
+
+    .empty-state-large p {
+        font-size: 13px !important;
+    }
+
+    /* Stats cards in pages — compact */
+    .stats-card-modern {
+        padding: 14px !important;
+        border-radius: 14px !important;
+    }
+
+    .stats-card-value {
+        font-size: 22px !important;
+    }
+
+    .stats-card-label {
+        font-size: 11px !important;
+    }
+
+    /* Info header bento — responsive */
+    .info-header-bento {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: flex-start !important;
+    }
+
+    .info-header-bento .info-icon-box {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .info-lesson-name {
+        font-size: 22px !important;
+    }
+
+    /* Auth card — full-width on mobile */
+    .auth-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 16px !important;
+        border-radius: 16px !important;
+    }
+
+    /* Landing wrapper — centered */
+    .landing-wrapper {
+        padding: 16px !important;
+    }
+
+    /* Login overlay — hide decorative elements */
+    #login-overlay .landing-info {
+        display: none !important;
+    }
+
+    #login-overlay .os-clock-large {
+        display: none !important;
+    }
+
+    #login-overlay .os-system-identity {
+        display: none !important;
+    }
+
+    /* Canvas (matrix bg) hidden on mobile login */
+    #login-overlay #matrixCanvas {
+        opacity: 0.3 !important;
+    }
+
+    /* Scanline hidden on mobile */
+    .scanline {
+        display: none !important;
+    }
+
+    /* Stagger animations — all disabled */
+    .stagger-1,
+    .stagger-2,
+    .stagger-3,
+    .stagger-4,
+    .stagger-5 {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
 }
