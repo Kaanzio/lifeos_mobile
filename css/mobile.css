@@ -2051,8 +2051,60 @@
     }
 
     .modal-body {
-        padding: 16px 20px 100px 20px !important;
-        /* Added 100px bottom padding to ensure buttons are visible above nav */
+        padding: 16px 20px 120px 20px !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Stack form rows on mobile */
+    .form-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .form-group {
+        width: 100% !important;
+        margin-bottom: 16px !important;
+    }
+
+    .form-label {
+        font-size: 13px !important;
+        margin-bottom: 6px !important;
+        opacity: 0.8;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 14px 16px !important;
+        font-size: 14px !important;
+        height: auto !important;
+        border-radius: 14px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1.5px solid var(--border-color) !important;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+        border-color: var(--accent-purple) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .modal-footer-modern {
+        margin-top: 10px !important;
+        padding: 0 0 20px 0 !important;
+        gap: 10px !important;
+    }
+
+    .modal-footer-modern .btn {
+        height: 44px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
     }
 
     .modal-footer {
