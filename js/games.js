@@ -20,7 +20,7 @@ const Games = {
     ],
 
     stores: [
-        { id: 'steam', name: 'Steam', color: '#1b2838' },
+        { id: 'steam', name: 'Steam', color: '#66c0f4' },
         { id: 'epic', name: 'Epic Games', color: '#ffffff' },
         { id: 'ubisoft', name: 'Ubisoft', color: '#bf94ff' },
         { id: 'xbox', name: 'Xbox', color: '#107c10' },

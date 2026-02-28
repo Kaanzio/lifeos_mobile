@@ -6590,8 +6590,9 @@ select.form-input:active {
 
 .pomodoro-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.4) !important;
 }
+
 
 /* Integrated Content */
 .pomodoro-integrated-content {
@@ -6618,8 +6619,9 @@ select.form-input:active {
 .pomo-mini-val {
     font-size: 24px;
     font-weight: 800;
-    color: var(--primary);
+    color: var(--accent-purple);
 }
+
 
 .pomo-mini-lab {
     font-size: 11px;
@@ -13814,9 +13816,10 @@ body {
 
 /* Specific store colors for the simple badge */
 .store-badge-simple.steam {
-    color: #1b2838;
+    color: #66c0f4;
     font-weight: 800;
 }
+
 
 
 .store-badge-simple.ubisoft {
@@ -14246,20 +14249,21 @@ select option {
     color: #0f172a !important;
 }
 
-/* Move game card content lower within the card */
+/* Move game card title higher within the card */
 .game-card-simple-v2 {
-    padding-top: 32px !important;
-    padding-bottom: 16px !important;
+    padding-top: 10px !important;
+    padding-bottom: 24px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-end !important;
+    justify-content: flex-start !important;
     min-height: 140px !important;
 }
 
 .game-card-simple-v2 .card-body-simple {
-    margin-top: 4px !important;
-    margin-bottom: 6px !important;
+    margin-top: 28px !important;
+    margin-bottom: 4px !important;
 }
+
 
 /* Ensure selected view buttons in light theme have white text on purple */
 [data-theme="light"] .view-btn.active svg {
