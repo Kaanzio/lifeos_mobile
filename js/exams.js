@@ -421,7 +421,7 @@ const Exams = {
                     <label class="form-label">Notlar</label>
                     <textarea class="form-textarea" name="notes" placeholder="Sınav hakkında notlar...">${exam ? (exam.notes || '') : ''}</textarea>
                 </div>
-                <div class="modal-footer-modern" style="padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+                <div class="modal-footer-modern" style="padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                     ${exam ? `
                         <button type="button" class="btn btn-danger-soft" onclick="Notifications.confirm('Sınavı Sil', 'Bu sınav silinecek. Emin misiniz?', () => { Exams.remove('${exam.id}'); App.closeModal(); })" style="margin-right: auto; padding: 10px 16px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>

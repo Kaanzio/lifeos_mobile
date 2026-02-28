@@ -560,7 +560,7 @@ window.Lessons = {
                     </div>
                 </div>
 
-                <div class="modal-footer-modern" style="padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+                <div class="modal-footer-modern" style="padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                     <button type="button" class="btn btn-secondary" onclick="App.closeModal()" style="padding: 10px 20px;">İptal</button>
                     <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -637,7 +637,7 @@ window.Lessons = {
                 </div>
             </div>
 
-            <div class="modal-footer-modern" style="padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+            <div class="modal-footer-modern" style="padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                 <button type="button" class="btn btn-secondary" onclick="App.closeModal()" style="padding: 10px 24px;">Kapat</button>
             </div>
         `;
