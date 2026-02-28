@@ -14249,10 +14249,11 @@ select option {
     color: #0f172a !important;
 }
 
-/* Move game card title higher within the card */
+/* Move game card title higher and to the left within the card */
 .game-card-simple-v2 {
-    padding-top: 10px !important;
-    padding-bottom: 24px !important;
+    padding-top: 18px !important;
+    /* Consistent top spacing */
+    padding-bottom: 20px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
@@ -14260,8 +14261,11 @@ select option {
 }
 
 .game-card-simple-v2 .card-body-simple {
-    margin-top: 28px !important;
-    margin-bottom: 4px !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    max-width: 65%;
+    /* Prevent overlapping with absolute store badge */
+    text-align: left !important;
 }
 
 
