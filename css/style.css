@@ -2915,10 +2915,26 @@ select.form-input:active {
 
 .view-btn.active {
     color: white;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
+    background: var(--accent-purple);
+    border: 1px solid var(--accent-purple);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+[data-theme="light"] .view-btn.active {
+    background: var(--accent-purple) !important;
+    color: #ffffff !important;
+    border-color: var(--accent-purple) !important;
+}
+
+[data-theme="light"] .view-btn {
+    color: #475569;
+}
+
+[data-theme="light"] .view-btn:hover {
+    background: #f1f5f9;
+    color: #1a1a2e;
+}
+
 
 
 
@@ -13798,20 +13814,34 @@ body {
 
 /* Specific store colors for the simple badge */
 .store-badge-simple.steam {
-    color: #00adee;
-    /* Vibrant Steam Blue */
+    color: #66c0f4;
     font-weight: 800;
 }
 
 .store-badge-simple.ubisoft {
-    color: #7b42ff;
-    /* Ubisoft Purple */
+    color: #bf94ff;
     font-weight: 800;
+}
+
+.store-badge-simple.xbox {
+    color: #107c10;
+    font-weight: 800;
+}
+
+.store-badge-simple.epic {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+[data-theme="light"] .store-badge-simple.epic {
+    color: #1a1a2e;
 }
 
 .store-badge-simple.nintendo {
     color: #e60012;
+    font-weight: 800;
 }
+
 
 .card-body-simple {
     width: 100%;
@@ -14148,6 +14178,85 @@ select option {
 [data-theme="light"] .quick-link span {
     color: #1e293b !important;
 }
+
+/* Games Section Light Theme Refinements */
+[data-theme="light"] .game-title-v2 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .list-group h3 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .list-group h3 span[style*="opacity: 0.5"] {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .status-label-v2 {
+    font-weight: 800 !important;
+}
+
+[data-theme="light"] .genre-tag-v2 {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .exam-premium-box.game-card-simple-v2 {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-theme="light"] .exam-premium-box.game-card-simple-v2:hover {
+    background: #f8fafc !important;
+    border-color: var(--accent-purple) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .stats-card-label {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .stats-card-value {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .list-item {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .list-item:hover {
+    background: #f8fafc !important;
+    border-color: var(--accent-purple) !important;
+}
+
+[data-theme="light"] .list-item div[style*="font-weight: 600"] {
+    color: #0f172a !important;
+}
+
+/* Move game card content lower within the card */
+.game-card-simple-v2 {
+    padding-top: 32px !important;
+    padding-bottom: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    min-height: 140px !important;
+}
+
+.game-card-simple-v2 .card-body-simple {
+    margin-top: 4px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Ensure selected view buttons in light theme have white text on purple */
+[data-theme="light"] .view-btn.active svg {
+    color: white !important;
+    opacity: 1 !important;
+}
+
 
 [data-theme="light"] .qa-icon,
 [data-theme="light"] .ql-icon {
