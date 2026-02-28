@@ -252,7 +252,7 @@ const YouTube = {
                     </div>
 
                     <div style="margin-bottom: 20px;">
-                        <div style="font-weight: 800; font-size: 22px; color: #ffffff; line-height: 1.1; margin-bottom: 6px; padding-right: 45px; letter-spacing: -0.5px;">
+                        <div style="font-weight: 800; font-size: 22px; color: var(--text-main); line-height: 1.1; margin-bottom: 6px; padding-right: 45px; letter-spacing: -0.5px;">
                             ${channel.name}
                         </div>
                         <div style="font-size: 14px; color: var(--text-muted); font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; opacity: 0.8;">
@@ -375,9 +375,9 @@ const YouTube = {
                     </div>
                 </div>
 
-                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; text-align: left;">
-                    <div style="color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">Kanal Hakkında</div>
-                    <div style="font-size: 15px; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap; text-align: left;">
+                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; text-align: left !important;">
+                    <div style="color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; text-align: left !important;">Kanal Hakkında</div>
+                    <div style="font-size: 15px; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap; text-align: left !important;">
                         ${channel.description || 'Bu kanal için açıklama eklenmemiş.'}
                     </div>
                 </div>
