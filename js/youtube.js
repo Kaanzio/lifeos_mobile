@@ -234,38 +234,41 @@ const YouTube = {
             return `
                 <div class="modern-card exam-premium-box channel-card" 
                      onclick="YouTube.showInfoModal('${channel.id}')"
-                     style="cursor: pointer; min-height: 120px; position: relative; padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+                     style="cursor: pointer; min-height: 145px; position: relative; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 24px;">
                     
-                    <div style="position: absolute; top: 12px; right: 12px; display: flex; align-items: center;">
-                        <button onclick="event.stopPropagation(); YouTube.toggleFavorite('${channel.id}')" 
-                                style="background: none; border: none; padding: 6px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; border-radius: 8px;"
-                                onmouseover="this.style.background='rgba(255,158,11,0.1)'; this.style.transform='scale(1.1)'"
-                                onmouseout="this.style.background='none'; this.style.transform='scale(1)'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" 
-                                 fill="${channel.isFavorite ? 'var(--warning)' : 'none'}" 
-                                 stroke="${channel.isFavorite ? 'var(--warning)' : 'var(--text-muted)'}" 
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                 style="filter: ${channel.isFavorite ? 'drop-shadow(0 0 8px rgba(245,158,11,0.4))' : 'none'}; opacity: ${channel.isFavorite ? '1' : '0.4'};">
+                    <div style="position: absolute; top: 18px; right: 18px; display: flex; align-items: center;">
+                        <div onclick="event.stopPropagation(); YouTube.toggleFavorite('${channel.id}')" 
+                                style="padding: 4px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center;"
+                                onmouseover="this.style.transform='scale(1.2)'"
+                                onmouseout="this.style.transform='scale(1)'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" 
+                                 fill="${channel.isFavorite ? '#fbbf24' : 'rgba(255,255,255,0.1)'}" 
+                                 stroke="${channel.isFavorite ? '#fbbf24' : 'rgba(255,255,255,0.2)'}" 
+                                 stroke-width="1" stroke-linecap="round" stroke-linejoin="round" 
+                                 style="${channel.isFavorite ? 'filter: drop-shadow(0 0 8px rgba(251,191,36,0.5))' : ''};">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                             </svg>
-                        </button>
+                        </div>
                     </div>
 
-                    <div style="margin-bottom: 24px;">
-                        <div style="font-weight: 800; font-size: 20px; color: var(--text-main); line-height: 1.2; margin-bottom: 4px; padding-right: 40px;">
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-weight: 800; font-size: 22px; color: #ffffff; line-height: 1.1; margin-bottom: 6px; padding-right: 45px; letter-spacing: -0.5px;">
                             ${channel.name}
                         </div>
-                        <div style="font-size: 14px; color: var(--text-muted); font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        <div style="font-size: 14px; color: var(--text-muted); font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; opacity: 0.8;">
                             ${channel.description || 'Açıklama belirtilmedi'}
                         </div>
                     </div>
 
-                    <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 11px; color: var(--accent-red); font-weight: 700; background: rgba(239, 68, 68, 0.15); padding: 4px 10px; border-radius: 12px;">${channel.category}</span>
-                        <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 6px 16px; font-size: 14px;">Aç</button>
+                    <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end;">
+                        <span style="font-size: 11px; color: #ef4444; font-weight: 700; background: rgba(239, 68, 68, 0.12); padding: 6px 14px; border-radius: 20px;">${channel.category}</span>
+                        <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn" 
+                                style="width: 65px; height: 38px; border-radius: 14px; padding: 0; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);">
+                            Aç
+                        </button>
                     </div>
-                </div >
-    `;
+                </div>
+            `;
         }).join('');
     },
 
@@ -303,7 +306,7 @@ const YouTube = {
                                         ${channel.description || ''}
                                     </div>
                                 </div>
-                                <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 4px 12px; font-size: 13px;">Aç</button>
+                                <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="width: 65px; height: 30px; padding: 0; font-size: 13px; display: flex; align-items: center; justify-content: center;">Aç</button>
                             </div>
                         `).join('')}
                     </div>
@@ -372,9 +375,9 @@ const YouTube = {
                     </div>
                 </div>
 
-                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px;">
+                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; text-align: left;">
                     <div style="color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">Kanal Hakkında</div>
-                    <div style="font-size: 15px; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap;">
+                    <div style="font-size: 15px; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap; text-align: left;">
                         ${channel.description || 'Bu kanal için açıklama eklenmemiş.'}
                     </div>
                 </div>

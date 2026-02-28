@@ -1491,8 +1491,9 @@ select.form-input:active {
     font-family: inherit;
     transition: all var(--transition-fast);
     color-scheme: dark;
-    /* Ensures native pickers and scrolls are dark */
+    accent-color: var(--accent-purple);
 }
+
 
 .form-input:focus,
 .form-select:focus,
@@ -14385,12 +14386,38 @@ select option {
     background: #f1f5f9 !important;
 }
 
-/* Date/Time Picker Light Theme Visibility */
+/* Date/Time Picker Theme Visibility Fixes */
 [data-theme="light"] .form-input[type="date"],
-[data-theme="light"] .form-input[type="time"] {
+[data-theme="light"] .form-input[type="time"],
+[data-theme="light"] .form-input[type="datetime-local"] {
     background: white !important;
     color: #1e293b !important;
-    border: 1px solid #cbd5e1 !important;
+    border: 2px solid #cbd5e1 !important;
+    /* Thick border for visibility */
+    color-scheme: light !important;
+}
+
+[data-theme="light"] .form-input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="light"] .form-input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="light"] .form-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: none !important;
+    /* Use browser default for light theme */
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .form-input[type="date"],
+[data-theme="dark"] .form-input[type="time"],
+[data-theme="dark"] .form-input[type="datetime-local"] {
+    color-scheme: dark !important;
+}
+
+[data-theme="dark"] .form-input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .form-input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .form-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) !important;
+    /* Forces icons to be white in dark mode */
+    opacity: 0.8;
 }
 
 [data-theme="light"] .form-input[type="date"]:focus,
