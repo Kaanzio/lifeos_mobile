@@ -14459,3 +14459,15 @@ select option {
     color: #ef4444 !important;
     border-color: #ef4444 !important;
 }
+
+/* Force YouTube Modal 'Ekle' button to stay red */
+#page-youtube .modal-footer-modern button[type="submit"],
+#page-youtube .modal-footer-modern .btn.yt-red-btn,
+#ytForm button[type="submit"],
+#ytEditForm button[type="submit"] {
+    background: #ef4444 !important;
+    background-image: none !important;
+    color: white !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3) !important;
+}
