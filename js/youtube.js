@@ -262,7 +262,7 @@ const YouTube = {
 
                     <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 11px; color: var(--accent-red); font-weight: 700; background: rgba(239, 68, 68, 0.15); padding: 4px 10px; border-radius: 12px;">${channel.category}</span>
-                        <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 8px 20px; font-size: 15px;">Aç</button>
+                        <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 6px 16px; font-size: 14px;">Aç</button>
                     </div>
                 </div >
     `;
@@ -303,7 +303,7 @@ const YouTube = {
                                         ${channel.description || ''}
                                     </div>
                                 </div>
-                                <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 6px 14px;">Aç</button>
+                                <button onclick="event.stopPropagation(); YouTube.visit('${channel.id}')" class="btn yt-red-btn btn-sm" style="padding: 4px 12px; font-size: 13px;">Aç</button>
                             </div>
                         `).join('')}
                     </div>

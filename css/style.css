@@ -295,9 +295,10 @@ body.compact-sidebar .logo-text-modern {
 .yt-red-focus:focus-within,
 .yt-red-focus:active,
 .yt-red-focus:hover,
-.yt-red-focus.active {
+#page-youtube .yt-red-focus:focus,
+#page-youtube .yt-red-focus:focus-within {
     border-color: #ef4444 !important;
-    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
     outline: none !important;
 }
 
@@ -8441,27 +8442,32 @@ body {
 
 .pomo-settings-panel {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 400px;
+    inset: -1px;
+    /* Grow slightly to cover container borders */
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
     background: var(--bg-secondary);
     z-index: 1000;
-    padding: 32px;
-    border-radius: 24px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 24px;
+    border-radius: inherit;
+    /* Matches parent card */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: none;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
 }
 
 .pomo-settings-panel.active {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, -50%);
+    transform: none !important;
 }
+
 
 .pomo-settings-panel .settings-title {
     font-size: 22px;
