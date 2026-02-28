@@ -13814,9 +13814,10 @@ body {
 
 /* Specific store colors for the simple badge */
 .store-badge-simple.steam {
-    color: #66c0f4;
+    color: #1b2838;
     font-weight: 800;
 }
+
 
 .store-badge-simple.ubisoft {
     color: #bf94ff;
@@ -13850,15 +13851,19 @@ body {
 }
 
 .game-title-v2 {
-    font-size: 19px;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.4px;
-    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    letter-spacing: -0.5px;
 }
+
 
 .card-footer-simple {
     width: 100%;
@@ -14065,18 +14070,23 @@ select option {
 
 [data-theme="light"] .dashboard-profile-info,
 [data-theme="light"] .banner-stat-item {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid #eef2f6 !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.01) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(0, 0, 0, 0.02) !important;
+    box-shadow: none !important;
     transition: all 0.3s var(--transition-bounce) !important;
+}
+
+[data-theme="light"] .dashboard-profile-info {
+    background: transparent !important;
+    border: none !important;
 }
 
 [data-theme="light"] .dashboard-profile-info:hover,
 [data-theme="light"] .banner-stat-item:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 12px 25px rgba(124, 58, 237, 0.08) !important;
-    background: #ffffff !important;
+    background: rgba(0, 0, 0, 0.08) !important;
 }
+
 
 [data-theme="light"] .dashboard-profile-info h3,
 [data-theme="light"] .banner-header h2,

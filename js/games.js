@@ -20,7 +20,7 @@ const Games = {
     ],
 
     stores: [
-        { id: 'steam', name: 'Steam', color: '#66c0f4' },
+        { id: 'steam', name: 'Steam', color: '#1b2838' },
         { id: 'epic', name: 'Epic Games', color: '#ffffff' },
         { id: 'ubisoft', name: 'Ubisoft', color: '#bf94ff' },
         { id: 'xbox', name: 'Xbox', color: '#107c10' },
@@ -28,7 +28,7 @@ const Games = {
         { id: 'gog', name: 'GOG', color: '#bf3efc' },
         { id: 'ps', name: 'PlayStation', color: '#003087' },
         { id: 'nintendo', name: 'Nintendo', color: '#e60012' },
-        { id: 'other', name: 'Diğer / PC', color: '#97a3b3' }
+        { id: 'other', name: 'Diğer', color: '#fbcfe8' }
     ],
 
 
