@@ -20,16 +20,17 @@ const Games = {
     ],
 
     stores: [
-        { id: 'steam', name: 'Steam', color: '#00adee' },
-        { id: 'epic', name: 'Epic Games', color: '#0078f2' },
+        { id: 'steam', name: 'Steam', color: '#66c0f4' },
+        { id: 'epic', name: 'Epic Games', color: '#ffffff' },
         { id: 'amazon', name: 'Amazon', color: '#ff9900' },
         { id: 'xbox', name: 'Xbox', color: '#107c10' },
         { id: 'gog', name: 'GOG', color: '#a435f0' },
         { id: 'ubisoft', name: 'Ubisoft', color: '#7b42ff' },
-        { id: 'playstation', name: 'PlayStation', color: '#66c0f4' },
+        { id: 'playstation', name: 'PlayStation', color: '#003791' },
         { id: 'nintendo', name: 'Nintendo', color: '#e60012' },
         { id: 'other', name: 'Diğer', color: '#6b7280' }
     ],
+
 
     genres: [
         { id: 'RPG', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/></svg>' },

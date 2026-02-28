@@ -275,15 +275,27 @@ const Storage = {
      */
     async clearAll() {
         try {
-            // Clear all registered keys
+            // 1. Clear IndexedDB for this user (large assets)
+            await this.clearLarge();
+
+            // 2. Clear all registered keys in Storage.KEYS
             Object.values(this.KEYS).forEach(key => {
                 localStorage.removeItem(this.userPrefix + key);
             });
 
-            // Clear IndexedDB for this user
-            await this.clearLarge();
+            // 3. Thorough sweep: Clear ALL keys in localStorage starting with this user's prefix
+            if (this.userPrefix) {
+                const keysToRemove = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith(this.userPrefix)) {
+                        keysToRemove.push(key);
+                    }
+                }
+                keysToRemove.forEach(key => localStorage.removeItem(key));
+            }
 
-            // Clear potential legacy keys
+            // 4. Clear potential legacy keys (both prefixed and unprefixed)
             const legacyKeys = [
                 'lifeos_lessons', 'lifeos_lessons_v5', 'lifeos_habit_chains',
                 'lifeos_planning_tasks', 'lifeos_profile', 'lifeos_settings',
@@ -311,11 +323,32 @@ const Storage = {
 
     async exportData() {
         const data = {};
+
+        // 1. Export based on official KEYS (for structure)
         Object.entries(this.KEYS).forEach(([name, key]) => {
             const val = this.load(key, []);
             data[name.toLowerCase()] = val;
             data[key] = val;
         });
+
+        // 2. Comprehensive Sweep: Export ALL keys in localStorage starting with this user's prefix
+        // This ensures extra settings, legacy keys, or module-specific data is also backed up.
+        if (this.userPrefix) {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith(this.userPrefix)) {
+                    // Avoid double-saving under long key names if already added by structured loop
+                    // but it's safer to just save everything to be sure.
+                    try {
+                        const rawVal = localStorage.getItem(key);
+                        data[key] = JSON.parse(rawVal);
+                    } catch (e) {
+                        data[key] = localStorage.getItem(key);
+                    }
+                }
+            }
+        }
+
 
         // Add Large Objects (IndexedDB)
         const largeKeys = await this.getAllLargeKeys();

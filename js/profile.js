@@ -317,26 +317,13 @@ const Profile = {
             'Tüm Verileri Sil',
             'Tüm dersler, kitaplar, sınavlar, oyunlar, dizi/film, youtube, siteler, notlar, takvim, alışkanlıklar ve görevler silinecek. Bu işlem geri alınamaz! Devam etmek istiyor musunuz?',
             async () => {
-                // 1. Clear all registered keys via Storage
+                // 1. Clear all data thoroughly for current user via Storage
                 await Storage.clearAll();
 
-                // 2. Sweep ALL user-prefixed keys from localStorage (catches anything not in Storage.KEYS)
-                const prefix = Storage.userPrefix;
-                if (prefix) {
-                    const keysToRemove = [];
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (key && key.startsWith(prefix)) {
-                            keysToRemove.push(key);
-                        }
-                    }
-                    keysToRemove.forEach(key => localStorage.removeItem(key));
-                }
-
-                // 3. Also clear unprefixed legacy profile key
+                // 2. Also clear unprefixed legacy profile key explicitly if any
                 localStorage.removeItem('lifeos_profile');
 
-                // 4. Reset user name in Auth system
+                // 3. Reset user name in Auth if active
                 const user = Auth.getCurrentUser();
                 if (user) {
                     user.name = 'Kullanıcı';
@@ -344,9 +331,10 @@ const Profile = {
                     localStorage.setItem('lifeos_user_session', JSON.stringify(user));
                 }
 
-                Notifications.add('Veriler Silindi', 'Tüm verileriniz temizlendi. Sayfa yenileniyor...', 'info');
+                Notifications.add('Veriler Silindi ✨', 'Tüm verileriniz temizlendi. Sayfa yenileniyor...', 'info');
                 setTimeout(() => location.reload(), 1500);
             }
+
         );
     },
 
