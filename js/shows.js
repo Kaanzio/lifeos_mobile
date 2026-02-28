@@ -866,7 +866,7 @@ const Shows = {
                     </div>
                 ` : ''}
 
-                <div class="modal-footer-modern" style="padding-top: 24px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+                <div class="modal-footer-modern" style="padding-top: 24px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                     <button class="btn btn-danger-soft" onclick="Notifications.confirm('İçeriği Sil', '<b>${show.title.replace(/'/g, "\\'")}</b> silinecektir. Onaylıyor musunuz?', () => { Shows.remove('${show.id}'); App.closeModal(); }, 'Evet, Sil')" style="margin-right: auto; border-radius: 12px; padding: 0 20px; height: 44px; font-weight: 700;">Kaldır</button>
                     <button class="btn btn-secondary" onclick="App.closeModal(); Shows.showAddModal(Shows.shows.find(s => s.id === '${show.id}'));" style="border-radius: 12px; padding: 0 20px; height: 44px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>

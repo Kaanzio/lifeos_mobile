@@ -520,6 +520,18 @@ select::-ms-expand {
     margin-bottom: 10px;
 }
 
+/* Custom Checkbox Visibility Fix */
+.form-group-checkbox input[type="checkbox"] {
+    -webkit-appearance: checkbox !important;
+    appearance: checkbox !important;
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: var(--accent-purple) !important;
+    cursor: pointer;
+    margin-right: 10px !important;
+    opacity: 1 !important;
+}
+
 .login-form .form-input {
     width: 100%;
     padding: 16px 20px;
@@ -1587,14 +1599,24 @@ select.form-input:active {
 }
 
 .btn-primary {
-    background: var(--gradient-primary);
+    background: var(--accent-purple);
     color: white;
     box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3);
+    opacity: 1;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.4);
+    filter: brightness(1.1);
+}
+
+#addTaskBtn,
+#settingsFloatingSave {
+    background: var(--accent-purple) !important;
+    background-image: none !important;
+    color: white !important;
+    opacity: 1 !important;
 }
 
 .btn-secondary {
@@ -6532,11 +6554,12 @@ select.form-input:active {
 }
 
 .pomodoro-btn.primary {
-    background: var(--gradient-primary);
-    color: white;
+    background: var(--accent-purple) !important;
+    color: white !important;
     border: none;
     padding: 14px 32px;
     font-size: 17px;
+    opacity: 1 !important;
 }
 
 .pomodoro-btn.secondary {
@@ -7140,6 +7163,14 @@ select.form-input:active {
     box-shadow: 0 0 0 2px var(--primary-color);
 }
 
+.modal-footer {
+    padding: 24px 32px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background: var(--bg-secondary);
+}
+
 .note-toolbar {
     padding: 8px 16px;
     border-bottom: 1px solid var(--border-color);
@@ -7463,6 +7494,10 @@ select.form-input:active {
 @media (max-width: 768px) {
     .schedule-week {
         grid-template-columns: 1fr;
+    }
+
+    .schedule-day-column {
+        min-height: auto;
     }
 }
 
@@ -8384,79 +8419,122 @@ body {
 
 .pomo-settings-panel {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
     background: var(--bg-secondary);
-    /* Solid background fix */
-    z-index: 100;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    z-index: 1000;
+    padding: 32px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: all var(--transition-medium);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pomo-settings-panel.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
 }
 
 .pomo-settings-panel .settings-title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
     margin-bottom: 24px;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.pomo-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pomo-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    transform: rotate(90deg);
 }
 
 .settings-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* 3 columns for Work/Short/Long */
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 100%;
-    max-width: 400px;
-    margin-bottom: 24px;
 }
 
 .setting-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    text-align: left;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+.setting-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--accent-purple);
 }
 
 .setting-item label {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
 }
 
 .setting-item input {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 10px;
-    color: var(--text-primary);
-    font-size: 14px;
+    background: #000;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 14px;
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
     width: 100%;
+    max-width: 120px;
+    margin: 0 auto;
     outline: none;
+    transition: all 0.2s;
 }
 
 .setting-item input:focus {
-    border-color: var(--primary);
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.2);
 }
 
 .settings-footer {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .btn-reset-data {
@@ -8477,11 +8555,13 @@ body {
 }
 
 .pomodoro-timer {
-    font-size: 80px;
-    font-weight: 700;
-    font-family: 'Plus Jakarta Sans', monospace;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
+    font-size: 96px;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -3px;
+    margin: 24px 0;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(var(--accent-rgb), 0.2);
 }
 
 .pomodoro-timer.work {
@@ -8494,8 +8574,11 @@ body {
 
 .pomodoro-status {
     color: var(--text-muted);
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
 }
 
 .pomodoro-controls {
@@ -8516,8 +8599,9 @@ body {
 }
 
 .pomodoro-btn.primary {
-    background: var(--gradient-primary);
-    color: white;
+    background: var(--accent-purple) !important;
+    color: white !important;
+    opacity: 1 !important;
 }
 
 .pomodoro-btn.secondary {
@@ -9375,6 +9459,7 @@ body {
     position: relative;
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .quick-site-btn:hover {
@@ -9609,7 +9694,8 @@ body {
     gap: 8px;
     padding: 12px;
     background: var(--bg-tertiary);
-    border-radius: var(--border-radius-sm);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .icon-picker-btn {
@@ -10608,7 +10694,7 @@ body[data-theme="light"] .theme-btn[data-theme="light"] {
 .form-input:focus {
     border-color: var(--accent-color);
     background: var(--bg-card);
-    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.1);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
     outline: none;
 }
 
@@ -11741,7 +11827,7 @@ body[data-theme="light"] .theme-btn[data-theme="light"] {
     margin: 0 8px;
 }
 
-/* Tek satır kategori: üstüne gelince sağa açılan dropdown */
+/* Tek satır kategori: üstine gelince sağa açılan dropdown */
 .filter-row-single {
     display: flex;
     align-items: center;
@@ -13710,23 +13796,15 @@ body {
 
 /* Specific store colors for the simple badge */
 .store-badge-simple.steam {
-    color: #1b92d4;
+    color: #00adee;
+    /* Vibrant Steam Blue */
+    font-weight: 800;
 }
 
-.store-badge-simple.amazon {
-    color: #ff9900;
-}
-
-.store-badge-simple.epic {
-    color: #ffffff;
-}
-
-.store-badge-simple.playstation {
-    color: #0072ce;
-}
-
-.store-badge-simple.xbox {
-    color: #107c10;
+.store-badge-simple.ubisoft {
+    color: #7b42ff;
+    /* Ubisoft Purple */
+    font-weight: 800;
 }
 
 .store-badge-simple.nintendo {
@@ -13790,110 +13868,216 @@ select option {
     color: var(--text-primary);
 }
 
- / *   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
-       P E R F E C T E D   L I G H T   T H E M E   O V E R R I D E S 
-       = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   * / 
- [ d a t a - t h e m e = \  
- l i g h t \ ]   { 
-         - - b g - g l a s s - s u b t l e :   r g b a ( 0 ,   0 ,   0 ,   0 . 0 3 ) ; 
-         - - b g - g l a s s - h o v e r :   r g b a ( 0 ,   0 ,   0 ,   0 . 0 6 ) ; 
-         - - b g - p a n e l :   # f f f f f f ; 
-         - - b o r d e r - c o l o r :   # c b d 5 e 1 ; 
-         - - s h a d o w - c o l o r :   r g b a ( 0 ,   0 ,   0 ,   0 . 1 ) ; 
- } 
- 
- / *   F i x   Q u i c k   A c t i o n s   &   S i t e   I c o n s   v i s i b i l i t y   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q u i c k - a c t i o n - b t n , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q u i c k - b t n , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q u i c k - s i t e - i c o n   { 
-         b a c k g r o u n d :   # f 8 f a f c   ! i m p o r t a n t ; 
-         b o r d e r :   1 p x   s o l i d   # e 2 e 8 f 0   ! i m p o r t a n t ; 
-         b o x - s h a d o w :   0   4 p x   6 p x   - 1 p x   r g b a ( 0 ,   0 ,   0 ,   0 . 0 5 )   ! i m p o r t a n t ; 
- } 
- 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q u i c k - a c t i o n - b t n   s p a n , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q u i c k - b t n   s p a n   { 
-         c o l o r :   # 0 f 1 7 2 a   ! i m p o r t a n t ; 
-         f o n t - w e i g h t :   7 0 0   ! i m p o r t a n t ; 
- } 
- 
- / *   E n s u r e   P r i m a r y   B u t t o n s   a r e   S O L I D   a n d   V I S I B L E   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   . b t n - p r i m a r y , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . s e t t i n g s - f l o a t i n g - s a v e , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . p o m o d o r o - b t n . p r i m a r y , 
- [ d a t a - t h e m e = \ l i g h t \ ]   # p r o m p t O k , 
- [ d a t a - t h e m e = \ l i g h t \ ]   # c o n f i r m O k , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . b t n [ t y p e = \ s u b m i t \ ]   { 
-         b a c k g r o u n d :   v a r ( - - a c c e n t - p u r p l e )   ! i m p o r t a n t ; 
-         c o l o r :   # f f f f f f   ! i m p o r t a n t ; 
-         o p a c i t y :   1   ! i m p o r t a n t ; 
-         b o x - s h a d o w :   0   1 0 p x   2 5 p x   r g b a ( v a r ( - - a c c e n t - r g b ) ,   0 . 3 )   ! i m p o r t a n t ; 
- } 
- 
- / *   F o r c e   t e x t   v i s i b i l i t y   i n   p r i m a r y   b u t t o n s   i f   t h e y   h a v e   S V G s   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   . b t n - p r i m a r y   s v g , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . s e t t i n g s - f l o a t i n g - s a v e   s v g   { 
-         c o l o r :   # f f f f f f   ! i m p o r t a n t ; 
-         s t r o k e :   # f f f f f f   ! i m p o r t a n t ; 
- } 
- 
- / *   F i x   C a t e g o r y   S e l e c t o r s   &   F o r m   C o n t r o l s   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   s e l e c t , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . f o r m - s e l e c t , 
- [ d a t a - t h e m e = \ l i g h t \ ]   s e l e c t   o p t i o n   { 
-         b a c k g r o u n d - c o l o r :   # f f f f f f   ! i m p o r t a n t ; 
-         c o l o r :   # 0 f 1 7 2 a   ! i m p o r t a n t ; 
-         b o r d e r :   1 p x   s o l i d   # c b d 5 e 1   ! i m p o r t a n t ; 
-         b a c k g r o u n d - i m a g e :   u r l ( \ d a t a : i m a g e / s v g + x m l  
- % 3 C s v g  
- x m l n s = h t t p : / / w w w . w 3 . o r g / 2 0 0 0 / s v g  
- w i d t h = 2 4  
- h e i g h t = 2 4  
- v i e w B o x = 0   0   2 4   2 4  
- f i l l = n o n e  
- s t r o k e = % 2 3 4 7 5 5 6 9  
- s t r o k e - w i d t h = 2 . 5  
- s t r o k e - l i n e c a p = r o u n d  
- s t r o k e - l i n e j o i n = r o u n d % 3 E % 3 C p o l y l i n e  
- p o i n t s = 6   9   1 2   1 5   1 8   9 % 3 E % 3 C / p o l y l i n e % 3 E % 3 C / s v g % 3 E \ )   ! i m p o r t a n t ; 
- } 
- 
- [ d a t a - t h e m e = \ l i g h t \ ]   . f o r m - i n p u t , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . f o r m - t e x t a r e a , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . f o r m - c o n t r o l   { 
-         b a c k g r o u n d - c o l o r :   # f f f f f f   ! i m p o r t a n t ; 
-         b o r d e r :   1 p x   s o l i d   # c b d 5 e 1   ! i m p o r t a n t ; 
-         c o l o r :   # 0 f 1 7 2 a   ! i m p o r t a n t ; 
- } 
- 
- / *   F i x   M o d a l   &   P a n e l   H e a d e r s / F o o t e r s   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   . m o d a l - h e a d e r , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . m o d a l - f o o t e r , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . m o d a l - f o o t e r - m o d e r n , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . p a n e l - h e a d e r   { 
-         b a c k g r o u n d :   # f f f f f f   ! i m p o r t a n t ; 
-         b o r d e r - b o t t o m :   1 p x   s o l i d   # f 1 f 5 f 9   ! i m p o r t a n t ; 
-         b o r d e r - t o p :   1 p x   s o l i d   # f 1 f 5 f 9   ! i m p o r t a n t ; 
- } 
- 
- [ d a t a - t h e m e = \ l i g h t \ ]   . c o n f i r m - b t n . c a n c e l , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . b t n - s e c o n d a r y   { 
-         b a c k g r o u n d :   # f 1 f 5 f 9   ! i m p o r t a n t ; 
-         c o l o r :   # 1 e 2 9 3 b   ! i m p o r t a n t ; 
-         b o r d e r :   1 p x   s o l i d   # e 2 e 8 f 0   ! i m p o r t a n t ; 
- } 
- 
- [ d a t a - t h e m e = \ l i g h t \ ]   . d a s h b o a r d - p a n e l   { 
-         b a c k g r o u n d :   # f f f f f f   ! i m p o r t a n t ; 
-         b o r d e r :   1 p x   s o l i d   # e 2 e 8 f 0   ! i m p o r t a n t ; 
-         b o x - s h a d o w :   0   4 p x   2 0 p x   r g b a ( 0 ,   0 ,   0 ,   0 . 0 5 )   ! i m p o r t a n t ; 
- } 
- 
- / *   F i x   T a g   &   B a d g e   V i s i b i l i t y   * / 
- [ d a t a - t h e m e = \ l i g h t \ ]   . g e n r e - t a g - v 2 , 
- [ d a t a - t h e m e = \ l i g h t \ ]   . q a - i c o n   { 
-         b a c k g r o u n d :   r g b a ( v a r ( - - a c c e n t - r g b ) ,   0 . 1 )   ! i m p o r t a n t ; 
-         c o l o r :   v a r ( - - a c c e n t - p u r p l e )   ! i m p o r t a n t ; 
- } 
-  
- 
+/* ==========================================================================
+   PERFECTED LIGHT THEME OVERRIDES
+   ========================================================================== */
+[data-theme="light"] {
+    --bg-glass-subtle: rgba(0, 0, 0, 0.03);
+    --bg-glass-hover: rgba(0, 0, 0, 0.06);
+    --bg-panel: #ffffff;
+    --border-color: #cbd5e1;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Fix Quick Actions & Site Icons visibility */
+[data-theme="light"] .quick-action-btn,
+[data-theme="light"] .quick-btn,
+[data-theme="light"] .quick-site-icon {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .quick-action-btn span,
+[data-theme="light"] .quick-btn span {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+/* Ensure Primary Buttons are SOLID and VISIBLE */
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .settings-floating-save,
+[data-theme="light"] .pomodoro-btn.primary,
+[data-theme="light"] #promptOk,
+[data-theme="light"] #confirmOk,
+[data-theme="light"] .btn[type="submit"] {
+    background: var(--accent-purple) !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.3) !important;
+}
+
+/* Force text visibility in primary buttons if they have SVGs */
+[data-theme="light"] .btn-primary svg,
+[data-theme="light"] .settings-floating-save svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+/* Fix Category Selectors & Form Controls */
+[data-theme="light"] select,
+[data-theme="light"] .form-select,
+[data-theme="light"] select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea,
+[data-theme="light"] .form-control {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+/* Fix Modal & Panel Headers/Footers */
+[data-theme="light"] .modal-header,
+[data-theme="light"] .modal-footer,
+[data-theme="light"] .modal-footer-modern,
+[data-theme="light"] .panel-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    border-top: 1px solid #f1f5f9 !important;
+}
+
+[data-theme="light"] .confirm-btn.cancel,
+[data-theme="light"] .btn-secondary {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .dashboard-panel {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Fix Tag & Badge Visibility */
+[data-theme="light"] .genre-tag-v2,
+[data-theme="light"] .qa-icon {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    color: var(--accent-purple) !important;
+}
+
+/* Light theme Quick Access label color */
+[data-theme="light"] .quick-action-btn span {
+    color: #1e293b !important;
+}
+
+/* Fix "Zinciri Kırma" in light theme */
+[data-theme="light"] .panel-habits {
+    background: white !important;
+}
+
+[data-theme="light"] .habit-bar {
+    background: #f1f5f9 !important;
+}
+
+[data-theme="light"] .habit-day {
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+[data-theme="light"] .habit-day.active {
+    background: var(--accent-purple) !important;
+    color: white !important;
+    border-color: var(--accent-purple) !important;
+}
+
+[data-theme="light"] .stat-label,
+[data-theme="light"] .panel-header h3 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .dashboard-banner {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .banner-stat-item {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+
+/* Consolidated Primary Button Styles - Solid & Vibrant */
+.btn-primary,
+.auth-btn,
+#addTaskBtn,
+.save-btn,
+.grade-badge.primary,
+.pomodoro-btn.primary,
+.premium-submit,
+#loginBtn {
+    background: var(--accent-purple) !important;
+    color: white !important;
+    opacity: 1 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+.btn-primary:hover,
+.auth-btn:hover,
+#addTaskBtn:hover,
+.pomodoro-btn.primary:hover,
+#loginBtn:hover {
+    background: #6d28d9 !important;
+    /* Slightly darker purple for hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Light theme Quick Access button compatibility */
+[data-theme="light"] .quick-action-btn,
+[data-theme="light"] .quick-link {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .quick-action-btn:hover,
+[data-theme="light"] .quick-link:hover {
+    background: #f8fafc !important;
+    border-color: var(--accent-purple) !important;
+}
+
+[data-theme="light"] .quick-action-btn span,
+[data-theme="light"] .quick-link span {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .qa-icon,
+[data-theme="light"] .ql-icon {
+    background: #f1f5f9 !important;
+    color: var(--accent-purple) !important;
+}
+
+/* Checkbox visibility fix */
+.form-group-checkbox input[type="checkbox"],
+#rememberMe {
+    -webkit-appearance: checkbox !important;
+    appearance: checkbox !important;
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: var(--accent-purple) !important;
+    opacity: 1 !important;
+    display: inline-block !important;
+    cursor: pointer !important;
+}
+
+/* Zinciri Kırma light theme fix */
+[data-theme="light"] .panel-habits,
+[data-theme="light"] #dashboardHabitChain {
+    background: white !important;
+}
+
+[data-theme="light"] .habit-chain-container {
+    background: #f8fafc !important;
+}
+
+[data-theme="light"] .stat-lbl {
+    color: #64748b !important;
+}

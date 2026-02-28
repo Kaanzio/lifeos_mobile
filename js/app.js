@@ -453,8 +453,8 @@ const App = {
                         </div>
                         
                         <div class="form-group-checkbox" style="display: flex; align-items: center; margin-bottom: 20px;">
-                            <input type="checkbox" id="rememberMe" style="width: auto; margin-right: 10px;">
-                            <label for="rememberMe" style="color: var(--text-muted); font-size: 14px; cursor: pointer;">Oturumu açık tut</label>
+                            <input type="checkbox" id="rememberMe" style="width: auto; margin-right: 10px; accent-color: var(--accent-purple);">
+                            <label for="rememberMe" style="color: var(--text-muted); font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px;">Beni hatırla</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary auth-btn" id="loginBtn">GİRİŞ YAP</button>

@@ -668,7 +668,7 @@ const Books = {
                         <textarea class="form-textarea" name="notes" rows="3">${book.notes || ''}</textarea>
                     </div>
                 </div>
-                <div class="modal-footer-modern" style="padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+                <div class="modal-footer-modern" style="padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                     <button type="button" class="btn btn-danger-soft" onclick="Notifications.confirm('Kitabı Sil', '${book.title} kitabını kütüphanenizden kaldırmak istediğinizden emin misiniz?', () => { Books.remove('${book.id}'); App.closeModal(); }, 'Evet, Kaldır')" style="margin-right: auto; padding: 10px 16px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                         Kaldır
@@ -751,7 +751,7 @@ const Books = {
                     <label class="form-label">Notlar</label>
                     <textarea class="form-textarea" name="notes" placeholder="Kitap hakkında notlar..."></textarea>
                 </div>
-                <div class="modal-footer-modern" style="padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
+                <div class="modal-footer-modern" style="padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end; align-items: center;">
                     <button type="button" class="btn btn-secondary" onclick="App.closeModal()" style="padding: 10px 20px;">İptal</button>
                     <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>

@@ -20,12 +20,12 @@ const Games = {
     ],
 
     stores: [
-        { id: 'steam', name: 'Steam', color: '#0070ff' },
+        { id: 'steam', name: 'Steam', color: '#00adee' },
         { id: 'epic', name: 'Epic Games', color: '#0078f2' },
         { id: 'amazon', name: 'Amazon', color: '#ff9900' },
         { id: 'xbox', name: 'Xbox', color: '#107c10' },
         { id: 'gog', name: 'GOG', color: '#a435f0' },
-        { id: 'ubisoft', name: 'Ubisoft', color: '#003087' },
+        { id: 'ubisoft', name: 'Ubisoft', color: '#7b42ff' },
         { id: 'playstation', name: 'PlayStation', color: '#66c0f4' },
         { id: 'nintendo', name: 'Nintendo', color: '#e60012' },
         { id: 'other', name: 'Diğer', color: '#6b7280' }
@@ -599,7 +599,7 @@ const Games = {
                 </div>
                 ` : ''}
 
-                <div class="modal-footer-modern" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; justify-content: flex-end;">
+                <div class="modal-footer-modern" style="margin-top: 30px; padding-top: 20px; display: flex; gap: 12px; justify-content: flex-end;">
                     <button class="btn btn-danger-soft" onclick="Notifications.confirm('Oyunu Sil', '<b>${game.title.replace(/'/g, "\\'")}</b> listeden kaldırılacaktır.', () => { Games.remove('${game.id}'); App.closeModal(); }, 'Evet, Kaldır')" style="margin-right: auto; padding: 10px 20px;">
                         Sil
                     </button>
