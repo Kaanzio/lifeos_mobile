@@ -27,6 +27,7 @@ const Pomodoro = {
         this.bindEvents();
         this.updateDisplay();
         this.updateStats();
+        this.updateModeDisplays();
     },
 
     loadData() {
@@ -48,6 +49,7 @@ const Pomodoro = {
         const today = App.getLocalDateString();
         if (data.lastDate !== today) {
             this.dailyStreak = 0;
+            this.completedPomodoros = 0;
         }
 
         // Apply settings to inputs
@@ -141,6 +143,18 @@ const Pomodoro = {
         }
 
         this.saveData();
+        this.updateModeDisplays();
+    },
+
+    updateModeDisplays() {
+        // Update the 3 visual quick cards on the hero screen
+        const dw = document.getElementById('dispWorkTime');
+        const ds = document.getElementById('dispShortBreak');
+        const dl = document.getElementById('dispLongBreak');
+
+        if (dw) dw.textContent = this.settings.workTime + ' dk';
+        if (ds) ds.textContent = this.settings.shortBreak + ' dk';
+        if (dl) dl.textContent = this.settings.longBreak + ' dk';
     },
 
     showSettingsModal() {
@@ -228,6 +242,51 @@ const Pomodoro = {
         document.getElementById('pomodoroStart').style.display = 'inline-flex';
         document.getElementById('pomodoroStart').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Devam';
         document.getElementById('pomodoroPause').style.display = 'none';
+    },
+    setMode(mode) {
+        if (this.isRunning) {
+            Notifications.confirm(
+                'Mod Değiştir',
+                'Zamanlayıcı çalışıyor. Mod değiştirmek zamanlayıcıyı sıfırlar. Devam edilsin mi?',
+                () => {
+                    this._applyMode(mode);
+                }
+            );
+        } else {
+            this._applyMode(mode);
+        }
+    },
+
+    _applyMode(mode) {
+        this.currentMode = mode;
+        this.isRunning = false;
+        this.isPaused = false;
+        clearInterval(this.timerInterval);
+
+        if (mode === 'work') this.timeRemaining = this.settings.workTime * 60;
+        else if (mode === 'shortBreak') this.timeRemaining = this.settings.shortBreak * 60;
+        else if (mode === 'longBreak') this.timeRemaining = this.settings.longBreak * 60;
+
+        document.getElementById('pomodoroControls').style.display = 'flex';
+        const choiceEl = document.getElementById('pomodoroChoice');
+        if (choiceEl) choiceEl.style.display = 'none';
+
+        document.getElementById('pomodoroStart').style.display = 'inline-flex';
+        document.getElementById('pomodoroStart').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Başlat';
+        document.getElementById('pomodoroPause').style.display = 'none';
+
+        // Update tabs active state
+        ['pomoTabWork', 'pomoTabShort', 'pomoTabLong'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('active');
+        });
+
+        if (mode === 'work' && document.getElementById('pomoTabWork')) document.getElementById('pomoTabWork').classList.add('active');
+        if (mode === 'shortBreak' && document.getElementById('pomoTabShort')) document.getElementById('pomoTabShort').classList.add('active');
+        if (mode === 'longBreak' && document.getElementById('pomoTabLong')) document.getElementById('pomoTabLong').classList.add('active');
+
+        this.updateDisplay();
+        this.stopAutoBreakCountdown();
     },
 
     reset() {
@@ -345,13 +404,7 @@ const Pomodoro = {
      */
     startBreak(mode) {
         this.stopAutoBreakCountdown();
-        this.currentMode = mode;
-        this.timeRemaining = (mode === 'shortBreak' ? this.settings.shortBreak : this.settings.longBreak) * 60;
-
-        document.getElementById('pomodoroControls').style.display = 'flex';
-        document.getElementById('pomodoroChoice').style.display = 'none';
-
-        this.updateDisplay();
+        this._applyMode(mode);
         this.start(); // Auto-start the break timer
     },
 
@@ -360,23 +413,7 @@ const Pomodoro = {
      */
     skipBreak() {
         this.stopAutoBreakCountdown();
-
-        // Stop current timer if running (especially useful if skip is called during active break)
-        this.isRunning = false;
-        this.isPaused = false;
-        clearInterval(this.timerInterval);
-
-        document.getElementById('pomodoroControls').style.display = 'flex';
-        document.getElementById('pomodoroChoice').style.display = 'none';
-
-        this.currentMode = 'work';
-        this.timeRemaining = this.settings.workTime * 60;
-        this.updateDisplay();
-
-        document.getElementById('pomodoroStart').style.display = 'inline-flex';
-        document.getElementById('pomodoroStart').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Başlat';
-        document.getElementById('pomodoroPause').style.display = 'none';
-
+        this._applyMode('work');
         Notifications.add('Mola Atlandı', 'Çalışma oturumu hazır.', 'info', true);
     },
 
@@ -432,6 +469,22 @@ const Pomodoro = {
             statusEl.textContent = statusLabels[this.currentMode];
         }
 
+        // Timer Title Feature
+        if (this.isRunning) {
+            const prefix = this.currentMode === 'work' ? '🔥' : '☕';
+            const statusNames = {
+                work: 'Odak',
+                shortBreak: 'Kısa Mola',
+                longBreak: 'Uzun Mola'
+            };
+            const minutes = Math.floor(this.timeRemaining / 60);
+            const seconds = this.timeRemaining % 60;
+            const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.title = `${prefix} ${timeString} - ${statusNames[this.currentMode]}`;
+        } else {
+            document.title = 'LifeOS - Hayatını Yönet';
+        }
+
         // Update skip button visibility
         const skipBtn = document.getElementById('pomodoroSkip');
         if (skipBtn) {
@@ -456,6 +509,26 @@ const Pomodoro = {
 
         const streakLab = document.querySelector('#pomodoroStreak + .pomo-mini-lab');
         if (streakLab) streakLab.textContent = 'Bugün (Adet)';
+
+        // Update hero flames
+        const flamesContainer = document.getElementById('pomoHeroFlames');
+        if (flamesContainer) {
+            let flamesHtml = '';
+            const completed = this.completedPomodoros;
+
+            if (completed <= 5) {
+                let activeCount = completed;
+                for (let i = 0; i < 5; i++) {
+                    flamesHtml += `<span class="pomo-flame ${i < activeCount ? 'active' : ''}">🔥</span>`;
+                }
+            } else {
+                flamesHtml = `<div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size: 22px; font-weight: 800; color: var(--text-primary);">${completed}x</span>
+                    <span class="pomo-flame active" style="font-size: 28px;">🔥</span>
+                </div>`;
+            }
+            flamesContainer.innerHTML = flamesHtml;
+        }
     },
 
     getPeriodMinutes(days) {
