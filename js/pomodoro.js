@@ -273,18 +273,47 @@ const Pomodoro = {
     updateMediaSession(timeString, prefix, statusName) {
         if ('mediaSession' in navigator) {
             if (timeString && this.isRunning) {
-                const baseUrl = window.location.href.split('index.html')[0].replace(/\/$/, '') + '/';
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: `${prefix} ${timeString} - ${statusName}`,
-                    artist: 'LifeOS Pomodoro',
-                    album: 'LifeOS',
-                    artwork: [
-                        { src: baseUrl + 'assets/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-                        { src: baseUrl + 'assets/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
-                    ]
-                });
+                const titleStr = `${prefix} ${timeString} - ${statusName}`;
+
+                // Only recreate metadata if title string really changed significantly (down to the minute) or isn't set
+                // Actually, recreating MediaMetadata every second breaks Android notifications.
+                // We should only set title to track the mode, and use setPositionState for the timer.
+                const modeTitle = `${prefix} ${statusName}`;
+                if (!this.lastMediaTitle || this.lastMediaTitle !== modeTitle) {
+                    this.lastMediaTitle = modeTitle;
+                    const baseUrl = window.location.href.split('index.html')[0].replace(/\/$/, '') + '/';
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: modeTitle,
+                        artist: 'LifeOS Zamanlayıcı',
+                        album: 'LifeOS',
+                        artwork: [
+                            { src: baseUrl + 'assets/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+                            { src: baseUrl + 'assets/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
+                        ]
+                    });
+                }
+
+                // Update Progress Bar / Timer on Mobile OS
+                if ('setPositionState' in navigator.mediaSession) {
+                    let totalSeconds = 0;
+                    if (this.currentMode === 'work') totalSeconds = this.settings.workTime * 60;
+                    else if (this.currentMode === 'shortBreak') totalSeconds = this.settings.shortBreak * 60;
+                    else if (this.currentMode === 'longBreak') totalSeconds = this.settings.longBreak * 60;
+
+                    // Ensure valid bounds
+                    const elapsed = Math.max(0, totalSeconds - this.timeRemaining);
+                    navigator.mediaSession.setPositionState({
+                        duration: totalSeconds,
+                        playbackRate: this.isRunning ? 1 : 0,
+                        position: elapsed
+                    });
+                }
             } else {
                 navigator.mediaSession.metadata = null;
+                this.lastMediaTitle = null;
+                if ('setPositionState' in navigator.mediaSession) {
+                    navigator.mediaSession.setPositionState(null); // Clear position state
+                }
             }
         }
     },
