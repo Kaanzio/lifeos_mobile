@@ -1474,20 +1474,7 @@
         gap: 8px !important;
     }
 
-    /* Pomodoro settings form — compact layout */
-    #pomodoroSettingsForm .form-group {
-        margin-bottom: 10px !important;
-    }
-
-    #pomodoroSettingsForm .form-label {
-        font-size: 13px !important;
-        margin-bottom: 4px !important;
-    }
-
-    #pomodoroSettingsForm .form-input {
-        height: 42px !important;
-        font-size: 15px !important;
-    }
+    /* Pomodoro Settings Form layout is handled via generic cross-device classes in style.css */
 
     /* ───────────────────────────────────────────
    22. YOUTUBE
@@ -2386,30 +2373,29 @@
     /* Standalone specific optimizations if any, safe areas already handled above */
 }
 
- / *   M o b i l e   C l e a n - u p :   R e m o v i n g   t h i n   s e p a r a t i o n   l i n e s   * / 
- @ m e d i a   ( m a x - w i d t h :   9 9 1 p x )   { 
-         . p l a n n i n g - h e a d e r - t o o l b a r   # p l a n n i n g N a v , 
-         . p l a n n i n g - h e a d e r - t o o l b a r   . v i e w - s e l e c t o r , 
-         . k a n b a n - c o l u m n - h e a d e r , 
-         . m o d a l - f o o t e r , 
-         . m o d a l - h e a d e r , 
-         . n o t i f i c a t i o n s - h e a d e r   { 
-                 b o r d e r :   n o n e   ! i m p o r t a n t ; 
-                 b o x - s h a d o w :   n o n e   ! i m p o r t a n t ; 
-         } 
-         
-         . v i e w - s e l e c t o r   { 
-                 b a c k g r o u n d :   v a r ( - - b g - s e c o n d a r y )   ! i m p o r t a n t ; 
-         } 
- 
-         # p l a n n i n g N a v   { 
-                 p a d d i n g :   0   ! i m p o r t a n t ; 
-                 b a c k g r o u n d :   t r a n s p a r e n t   ! i m p o r t a n t ; 
-         } 
-         
-         . m o d a l - f o o t e r - m o d e r n   { 
-                 b o r d e r - t o p :   n o n e   ! i m p o r t a n t ; 
-         } 
- } 
-  
- 
+/* Mobile Clean-up: Removing thin separation lines */
+@media (max-width: 991px) {
+
+    .planning-header-toolbar #planningNav,
+    .planning-header-toolbar .view-selector,
+    .kanban-column-header,
+    .modal-footer,
+    .modal-header,
+    .notifications-header {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .view-selector {
+        background: var(--bg-secondary) !important;
+    }
+
+    #planningNav {
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    .modal-footer-modern {
+        border-top: none !important;
+    }
+}

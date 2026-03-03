@@ -149,25 +149,22 @@ const Pomodoro = {
 
         modalTitle.innerHTML = '<div style="display:flex; align-items:center; gap:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pomodoro Ayarları</div>';
         modalBody.innerHTML = `
-            <form id="pomodoroSettingsForm">
-                <div class="form-group">
-                    <label class="form-label" style="display:flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Çalışma Süresi (dk)</label>
-                    <input type="number" class="form-input" name="workTime" min="1" max="60" value="${this.settings.workTime}">
+            <form id="pomodoroSettingsForm" class="pomodoro-settings-form">
+                <div class="form-group pomo-setting-card">
+                    <label class="form-label pomo-setting-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6"/><path d="M9 9l6 6"/></svg> Çalışma (dk)</label>
+                    <input type="number" class="form-input pomo-number-input" name="workTime" min="1" max="60" value="${this.settings.workTime}">
                 </div>
-                <div class="form-group">
-                    <label class="form-label" style="display:flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" x2="6" y1="1" y2="4"/><line x1="10" x2="10" y1="1" y2="4"/><line x1="14" x2="14" y1="1" y2="4"/></svg> Kısa Mola (dk)</label>
-                    <input type="number" class="form-input" name="shortBreak" min="1" max="30" value="${this.settings.shortBreak}">
+                <div class="form-group pomo-setting-card">
+                    <label class="form-label pomo-setting-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" x2="6" y1="1" y2="4"/><line x1="10" x2="10" y1="1" y2="4"/><line x1="14" x2="14" y1="1" y2="4"/></svg> Kısa (dk)</label>
+                    <input type="number" class="form-input pomo-number-input" name="shortBreak" min="1" max="30" value="${this.settings.shortBreak}">
                 </div>
-                <div class="form-group">
-                    <label class="form-label" style="display:flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg> Uzun Mola (dk)</label>
-                    <input type="number" class="form-input" name="longBreak" min="1" max="60" value="${this.settings.longBreak}">
+                <div class="form-group pomo-setting-card">
+                    <label class="form-label pomo-setting-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg> Uzun (dk)</label>
+                    <input type="number" class="form-input pomo-number-input" name="longBreak" min="1" max="60" value="${this.settings.longBreak}">
                 </div>
-                <div class="modal-footer" style="padding: 0; border: none; margin-top: 24px; display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
-                    <button type="button" class="btn btn-danger-ghost" onclick="Pomodoro.resetAllStats()" style="font-size: 13px; color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 8px 12px; border-radius: 8px; font-weight: 600; display:flex; align-items:center; gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Sıfırla</button>
-                    <div style="display: flex; gap: 8px;">
-                        <button type="button" class="btn btn-secondary" onclick="App.closeModal()" style="border-radius: 8px; padding: 8px 16px;">İptal</button>
-                        <button type="submit" class="btn btn-primary" style="border-radius: 8px; padding: 8px 20px; font-weight: 700;">Kaydet</button>
-                    </div>
+                <div class="pomo-settings-footer">
+                    <button type="button" class="btn btn-danger-ghost pomo-reset-btn" onclick="Pomodoro.resetAllStats()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Sıfırla</button>
+                    <button type="submit" class="btn btn-primary pomo-save-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Kaydet</button>
                 </div>
             </form>
         `;
