@@ -330,7 +330,7 @@ const Pomodoro = {
                     album: 'LifeOS',
                     artwork: [
                         { src: baseUrl + 'assets/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-                        { src: baseUrl + 'assets/icons/pomo-bg.png', sizes: '512x512', type: 'image/png' }
+                        { src: baseUrl + 'assets/icons/pomo-bg-wide.png', sizes: '1024x512', type: 'image/png' }
                     ]
                 });
 
