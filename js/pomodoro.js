@@ -247,23 +247,68 @@ const Pomodoro = {
     },
 
     manageSilentAudio(play) {
-        if (!this.silentAudio) {
-            this.silentAudio = document.createElement('audio');
-            this.silentAudio.src = 'assets/audio/silence.wav';
-            this.silentAudio.preload = 'auto';
-            this.silentAudio.loop = true;
-            this.silentAudio.setAttribute('playsinline', '');
-            this.silentAudio.style.display = 'none';
-            document.body.appendChild(this.silentAudio);
+        let totalSeconds = 0;
+        if (this.currentMode === 'work') totalSeconds = this.settings.workTime * 60;
+        else if (this.currentMode === 'shortBreak') totalSeconds = this.settings.shortBreak * 60;
+        else if (this.currentMode === 'longBreak') totalSeconds = this.settings.longBreak * 60;
+        if (!totalSeconds) totalSeconds = 1500; // Failsafe
 
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.setActionHandler('play', () => { this.start(); });
-                navigator.mediaSession.setActionHandler('pause', () => { this.pause(); });
+        if (!this.silentAudio || this.lastAudioDuration !== totalSeconds) {
+            if (this.silentAudio && this.silentAudio.src && this.silentAudio.src.startsWith('blob:')) {
+                try { URL.revokeObjectURL(this.silentAudio.src); } catch (e) { }
             }
+            if (!this.silentAudio) {
+                this.silentAudio = document.createElement('audio');
+                this.silentAudio.setAttribute('playsinline', '');
+                this.silentAudio.style.display = 'none';
+                document.body.appendChild(this.silentAudio);
+
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.setActionHandler('play', () => { this.start(); });
+                    navigator.mediaSession.setActionHandler('pause', () => { this.pause(); });
+                }
+            }
+
+            // DYNAMIC IN-MEMORY AUDIO GENERATION (8000Hz, 8-bit, Mono)
+            // Fixes the Android 15-second loop limitations completely with perfectly sync'd duration
+            const sampleRate = 8000;
+            const numSamples = sampleRate * totalSeconds;
+            const buffer = new ArrayBuffer(44 + numSamples);
+            const view = new DataView(buffer);
+            const writeStr = (o, str) => { for (let i = 0; i < str.length; i++) view.setUint8(o + i, str.charCodeAt(i)); };
+
+            writeStr(0, 'RIFF');
+            view.setUint32(4, 36 + numSamples, true);
+            writeStr(8, 'WAVE');
+            writeStr(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM
+            view.setUint16(22, 1, true); // Mono
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate, true);
+            view.setUint16(32, 1, true);
+            view.setUint16(34, 8, true);
+            writeStr(36, 'data');
+            view.setUint32(40, numSamples, true);
+            new Uint8Array(buffer, 44).fill(128); // 128 is pure silence in 8-bit PCM
+
+            const blob = new Blob([buffer], { type: 'audio/wav' });
+            this.silentAudio.src = URL.createObjectURL(blob);
+            this.silentAudio.preload = 'auto';
+            this.silentAudio.loop = false; // Important: DO NOT loop, or Android resets progress bar!
+            this.lastAudioDuration = totalSeconds;
         }
 
         if (play) {
-            try { this.silentAudio.play().catch(e => console.log('Silent audio blocked', e)); } catch (e) { }
+            try {
+                let elapsed = Math.max(0, totalSeconds - this.timeRemaining);
+                elapsed = Math.min(totalSeconds, elapsed);
+                // Math.abs to prevent sound "skipping" clicks and interrupt buffering
+                if (Math.abs(this.silentAudio.currentTime - elapsed) > 1.5) {
+                    this.silentAudio.currentTime = elapsed;
+                }
+                this.silentAudio.play().catch(e => console.log('Silent audio blocked', e));
+            } catch (e) { }
         } else {
             try { this.silentAudio.pause(); } catch (e) { }
         }

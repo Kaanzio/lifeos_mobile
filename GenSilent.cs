@@ -3,8 +3,8 @@ using System.IO;
 
 public class ProgramWav {
     public static void Create() {
-        int sampleRate = 8000;
-        int duration = 15; // 15 seconds
+        int sampleRate = 1; // 1 byte per second!
+        int duration = 7200; // 2 hours
         int numSamples = sampleRate * duration;
         byte[] bytes = new byte[numSamples];
         // 128 is "silence" in 8-bit unsigned Audio
