@@ -278,18 +278,39 @@ const Pomodoro = {
             if (timeString && this.isRunning) {
                 const baseUrl = window.location.href.split('index.html')[0].replace(/\/$/, '') + '/';
 
-                // Minimal title prevents scrolling (marquee) issues on Android
+                // Minimal title forces Android to drop the URL text and use 'artist' instead
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: `${prefix} ${timeString}`,
-                    artist: '',
-                    album: '',
+                    artist: statusName,
+                    album: 'LifeOS',
                     artwork: [
                         { src: baseUrl + 'assets/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
                         { src: baseUrl + 'assets/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
                     ]
                 });
+
+                if ('setPositionState' in navigator.mediaSession) {
+                    let totalSeconds = 0;
+                    if (this.currentMode === 'work') totalSeconds = this.settings.workTime * 60;
+                    else if (this.currentMode === 'shortBreak') totalSeconds = this.settings.shortBreak * 60;
+                    else if (this.currentMode === 'longBreak') totalSeconds = this.settings.longBreak * 60;
+
+                    let elapsed = Math.max(0, totalSeconds - this.timeRemaining);
+                    elapsed = Math.min(totalSeconds, elapsed);
+
+                    try {
+                        navigator.mediaSession.setPositionState({
+                            duration: totalSeconds,
+                            playbackRate: 1, // Progress bar moves natively at 1x speed
+                            position: elapsed
+                        });
+                    } catch (e) { }
+                }
             } else {
                 navigator.mediaSession.metadata = null;
+                if ('setPositionState' in navigator.mediaSession) {
+                    try { navigator.mediaSession.setPositionState(null); } catch (e) { }
+                }
             }
         }
     },
